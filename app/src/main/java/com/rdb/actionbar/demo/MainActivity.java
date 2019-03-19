@@ -11,28 +11,47 @@ import android.widget.Toast;
 import com.rdb.actionbar.Action;
 import com.rdb.actionbar.CustomBar;
 import com.rdb.actionbar.FloatingBar;
+import com.rdb.actionbar.Title;
 import com.rdb.actionbar.Type;
+import com.rdb.menu.MenuHelper;
+import com.rdb.menu.OnMenuListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CustomBar customBar = findViewById(R.id.customBar);
+        final CustomBar customBar = findViewById(R.id.customBar);
         customBar.bindActivity(this);
 //        customBar.showStatusView(true,true);//全屏时调用
         customBar.getTitle().setText("CustomBar").setVisible(true);
         customBar.getSecondTitle().setText("标题居中 菜单").setVisible(true);
-        customBar.addImageAction(Type.OTHER, "share", CustomBar.RIGHT).setImageResource(R.drawable.core_ic_custombar_share, true).setVisible(true);
         customBar.addImageAction(Type.OVERFLOW, "more", CustomBar.RIGHT).setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
+        customBar.addImageAction(Type.OTHER, "share", CustomBar.RIGHT).setImageResource(R.drawable.core_ic_custombar_share, true).setVisible(true);
         customBar.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
                 Toast.makeText(MainActivity.this, "CustomBar action id = " + action.getId() + " tag = " + action.getTag(), Toast.LENGTH_SHORT).show();
             }
         });
+        customBar.setOnTitleClickListener(new Title.OnTitleClickListener() {
+            @Override
+            public void onTitleClick() {
+                if (menuHelper == null) {
+                    menuHelper = MenuHelper.instance(MainActivity.this, customBar, true, new OnMenuListener.ActivityMenuListener(MainActivity.this));
+                    menuHelper.setGravity(MenuHelper.CENTER);
+                }
+                menuHelper.toggleShow();
+            }
 
+            @Override
+            public void onTitleDoubleClick() {
+
+            }
+        });
         CustomBar customBar2 = findViewById(R.id.customBar2);
         customBar2.bindActivity(this);
         customBar2.setTitleAlignLeft(true);
@@ -53,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         customBar3.getTitle().setText("CustomBar").setVisible(true);
         customBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
         customBar3.addImageAction(Type.BACK, "back", CustomBar.LEFT).setImageResource(R.drawable.core_ic_custombar_close, true).setVisible(true);
+        customBar3.addImageAction(Type.OVERFLOW, "more", CustomBar.LEFT).setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
         customBar3.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
@@ -64,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         floatingBar.bindActivity(this);
         floatingBar.setOrientation(LinearLayout.VERTICAL);
         floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
-        floatingBar.addImageAction("add").setImageResource(R.drawable.core_ic_custombar_add, true).setVisible(true);
-        floatingBar.addImageAction("search").setImageResource(R.drawable.core_ic_custombar_search, true).setVisible(true);
-        floatingBar.addImageAction("refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true).setVisible(true);
+        floatingBar.addImageAction(Type.OVERFLOW, "add").setImageResource(R.drawable.core_ic_custombar_add, true).setVisible(true);
+        floatingBar.addImageAction(Type.OVERFLOW, "search").setImageResource(R.drawable.core_ic_custombar_search, true).setVisible(true);
+        floatingBar.addImageAction(Type.OVERFLOW, "refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true).setVisible(true);
         floatingBar.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {

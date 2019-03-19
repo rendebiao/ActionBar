@@ -208,16 +208,6 @@ public class CustomBar extends ActionBar {
         return divider;
     }
 
-    public boolean performOptionMenu() {
-        for (int i = 0; i < actions.size(); i++) {
-            Action action = actions.get(actions.keyAt(i));
-            if (toggleOptionMenu(action)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);

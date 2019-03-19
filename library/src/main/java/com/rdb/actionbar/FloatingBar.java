@@ -101,11 +101,9 @@ public class FloatingBar extends ActionBar {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (expand) {
-                performOptionMenu();
-                return true;
-            }
+        if (expand && event.getAction() == MotionEvent.ACTION_DOWN) {
+            switchExpand();
+            return true;
         }
         return super.onTouchEvent(event);
     }
@@ -119,18 +117,10 @@ public class FloatingBar extends ActionBar {
         unexpandAnimator.addUpdateListener(animatorUpdateListener);
     }
 
-    public boolean performOptionMenu() {
+    public void switchExpand() {
         if (parentAction != null && parentAction.isVisible()) {
             menuClickListener.onActionClick(parentAction);
-        } else {
-            for (int i = 0; i < actions.size(); i++) {
-                Action action = actions.get(actions.keyAt(i));
-                if (toggleOptionMenu(action)) {
-                    return true;
-                }
-            }
         }
-        return false;
     }
 
     public boolean isExpand() {
@@ -161,24 +151,24 @@ public class FloatingBar extends ActionBar {
         return textView;
     }
 
-    public Image addImageAction(String tag) {
-        return addImageAction(tag, false);
+    public Image addImageAction(Type type, String tag) {
+        return addImageAction(type, tag, false);
     }
 
-    private Image addImageAction(String tag, boolean isMenu) {
-        Image action = createImageAction(isMenu ? Type.OVERFLOW : Type.OTHER, tag, newImageView(), Color.WHITE, isMenu ? menuClickListener : null);
+    private Image addImageAction(Type type, String tag, boolean isMenu) {
+        Image action = createImageAction(type, tag, newImageView(), Color.WHITE, isMenu ? menuClickListener : null);
         addActionView(action, isMenu);
         return action;
     }
 
-    public Text addTextAction(String tag) {
-        Text action = createTextAction(Type.OTHER, tag, newTextView(), Color.WHITE, null);
+    public Text addTextAction(Type type, String tag) {
+        Text action = createTextAction(type, tag, newTextView(), Color.WHITE, null);
         addActionView(action, false);
         return action;
     }
 
-    public Custom addCustomAction(String tag) {
-        Custom action = createCustomAction(Type.OTHER, tag, null);
+    public Custom addCustomAction(Type type, String tag) {
+        Custom action = createCustomAction(type, tag, null);
         addActionView(action, false);
         return action;
     }
@@ -201,7 +191,7 @@ public class FloatingBar extends ActionBar {
                     Action a = actions.get(actions.keyAt(i));
                     a.container.setSelected(true);
                 }
-                parentAction = addImageAction(null, true).setImageResource(parentDrawableId, true);
+                parentAction = addImageAction(Type.OVERFLOW, null, true).setImageResource(parentDrawableId, true);
             }
             if (parentAction != null) {
                 parentAction.container.bringToFront();
