@@ -236,10 +236,12 @@ public class FloatingBar extends ActionBar {
         }
     }
 
-    public void performOptionMenu() {
+    public boolean performOptionMenu() {
         if (parentAction != null && parentAction.isVisible()) {
             menuClickListener.onActionClick(parentAction);
+            return true;
         }
+        return false;
     }
 
     @Override

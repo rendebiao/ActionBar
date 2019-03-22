@@ -138,6 +138,12 @@ public class CustomBar extends ActionBar {
         statusView.setShowShadow(showShadow);
     }
 
+    public void addProgressView(View progressView, boolean top) {
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(top ? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.ALIGN_PARENT_BOTTOM);
+        contentView.addView(progressView, layoutParams);
+    }
+
     private AppCompatImageView newImageView(int width) {
         AppCompatImageView imageView = ViewCreater.getViewCreater().newImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
