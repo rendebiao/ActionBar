@@ -36,6 +36,8 @@ public class FloatingBar extends ActionBar {
     private boolean horizontal;
     private Image parentAction;
     private int parentDrawableId;
+    private int foregroundColor;
+    private int backgroundColor;
     private Action.OnActionListener actionClickListener;
     private ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
     private ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
@@ -132,7 +134,7 @@ public class FloatingBar extends ActionBar {
     }
 
     private AppCompatImageView newImageView() {
-        AppCompatImageView imageView = new AppCompatImageView(getContext());
+        AppCompatImageView imageView = ViewCreater.getViewCreater().newImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setDuplicateParentStateEnabled(true);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -140,7 +142,7 @@ public class FloatingBar extends ActionBar {
     }
 
     private AppCompatTextView newTextView() {
-        AppCompatTextView textView = new AppCompatTextView(getContext());
+        AppCompatTextView textView = ViewCreater.getViewCreater().newTextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setEms(4);
         textView.setSingleLine();
@@ -231,6 +233,12 @@ public class FloatingBar extends ActionBar {
                     action.container.setAlpha(0);
                 }
             }
+        }
+    }
+
+    public void performOptionMenu() {
+        if (parentAction != null && parentAction.isVisible()) {
+            menuClickListener.onActionClick(parentAction);
         }
     }
 

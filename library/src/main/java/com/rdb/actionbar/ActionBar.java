@@ -181,6 +181,11 @@ abstract class ActionBar extends LinearLayout {
         animator.start();
     }
 
+    @Override
+    public boolean isFocused() {
+        return isFocused;
+    }
+
     public void setActionListener(Action.OnActionListener listener) {
         actionClickListener = listener;
     }

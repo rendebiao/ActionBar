@@ -139,7 +139,7 @@ public class CustomBar extends ActionBar {
     }
 
     private AppCompatImageView newImageView(int width) {
-        AppCompatImageView imageView = new AppCompatImageView(getContext());
+        AppCompatImageView imageView = ViewCreater.getViewCreater().newImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setDuplicateParentStateEnabled(true);
         imageView.setBackgroundResource(actionBarItemBackground);
@@ -148,7 +148,7 @@ public class CustomBar extends ActionBar {
     }
 
     private AppCompatTextView newTextView(int width) {
-        AppCompatTextView textView = new AppCompatTextView(getContext());
+        AppCompatTextView textView = ViewCreater.getViewCreater().newTextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setEms(4);
         textView.setSingleLine();
@@ -212,6 +212,16 @@ public class CustomBar extends ActionBar {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         updateTitleLayout();
+    }
+
+    public boolean performOptionMenu() {
+        for (int i = 0; i < actions.size(); i++) {
+            Action action = actions.get(actions.keyAt(i));
+            if (toggleOptionMenu(action)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void updateContentHeight(int height) {
