@@ -3,7 +3,7 @@ package com.rdb.actionbar;
 import android.view.View;
 import android.widget.TextView;
 
-public class Title extends ViewHolder implements View.OnClickListener {
+public class Title extends Holder implements View.OnClickListener {
 
     private static final long DOUBLE_CLICK_TIME = 200;
     private TextView textView;
@@ -65,9 +65,7 @@ public class Title extends ViewHolder implements View.OnClickListener {
     }
 
     public interface OnTitleClickListener {
-
         void onTitleClick();
-
         void onTitleDoubleClick();
     }
 }

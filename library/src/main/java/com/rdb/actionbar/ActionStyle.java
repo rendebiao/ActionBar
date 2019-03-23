@@ -1,25 +1,25 @@
-package com.rdb.menu;
+package com.rdb.actionbar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class MenuStyle {
+public abstract class ActionStyle {
 
-    public static int backgroundColor = Color.WHITE;
-    public static int backgroundElevation = 5;
-    public static int backgroundCornerRadius = 2;
-    public static int menuItemHeight = 42;
-    public static int menuItemTextSize = 13;
-    public static int menuItemTextColor = Color.BLACK;
-    public static int menuItemPaddingHorizontal = 12;
-    public static int menuItemIconSize = 32;
-    public static int menuItemIconPadding = 8;
-    public static int popupWidth = 140;
+    public static int toolBarHeight = 42;
+    public static int toolBarTitleSize = 17;
+    public static int toolBarSecondTitleSize = 13;
+    public static int toolBarActionTextSize = 13;
+    public static int toolBarProgressHeight = 2;
+    public static int toolBarDividerHeight = 1;
+
+    public static int floatingBarParentSize = 54;
+    public static int floatingBarChildSize = 54;
+    public static int floatingBarMargin = 20;
+    public static int floatingBarActionTextSize = 13;
     public static Class<? extends AppCompatTextView> textViewClass = AppCompatTextView.class;
     public static Class<? extends AppCompatImageView> imageViewClass = AppCompatImageView.class;
 

@@ -14,12 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-public class CustomBar extends ActionBar {
+public class ToolBar extends ActionBar {
 
     public static final int LEFT = 0;
     public static final int CENTER = 1;
     public static final int RIGHT = 2;
-    private static int defaultHeight;
     private int curHeight;
     private int titleMarginLeft;
     private int titleMarginRight;
@@ -36,26 +35,22 @@ public class CustomBar extends ActionBar {
     private RelativeLayout contentView;
     private int actionBarItemBackground;
 
-    public CustomBar(Context context) {
+    public ToolBar(Context context) {
         this(context, null);
     }
 
-    public CustomBar(Context context, AttributeSet attrs) {
+    public ToolBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomBar(Context context, AttributeSet attrs, int defStyle) {
+    public ToolBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initViews(context);
     }
 
-    public static void setDefaultHeight(int defaultHeight) {
-        CustomBar.defaultHeight = defaultHeight;
-    }
-
     private void initViews(Context context) {
         setOrientation(VERTICAL);
-        curHeight = defaultHeight > 0 ? defaultHeight : (int) (42 * density);
+        curHeight = (int) ((ActionStyle.toolBarHeight > 0 ? ActionStyle.toolBarHeight : 42) * density);
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(android.R.attr.actionBarItemBackground, typedValue, true);
         actionBarItemBackground = typedValue.resourceId;
@@ -103,13 +98,13 @@ public class CustomBar extends ActionBar {
         AppCompatTextView titleView = new AppCompatTextView(context);
         titleView.setGravity(Gravity.CENTER);
         titleView.setSingleLine();
-        titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
+        titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarTitleSize);
         titleLayout.addView(titleView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         titleView.setVisibility(View.GONE);
         AppCompatTextView titleSecondView = new AppCompatTextView(context);
         titleSecondView.setGravity(Gravity.CENTER);
         titleSecondView.setSingleLine();
-        titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarSecondTitleSize);
         LayoutParams layoutParams1 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams1.setMargins(0, (int) (-3 * density), 0, 0);
         titleLayout.addView(titleSecondView, layoutParams1);
@@ -124,12 +119,12 @@ public class CustomBar extends ActionBar {
     private void initOtherLayout(Context context) {
         View view = new View(context);
         divider = new Divider(view);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (density * ActionStyle.toolBarDividerHeight));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         contentView.addView(view, layoutParams);
         progress = new Progress(context);
         progress.setColor(getForegroundColor());
-        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (density * 2));
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (density * ActionStyle.toolBarProgressHeight));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         contentView.addView(progress.get(), layoutParams);
     }
@@ -147,7 +142,7 @@ public class CustomBar extends ActionBar {
     }
 
     private AppCompatImageView newImageView(int width) {
-        AppCompatImageView imageView = ViewCreater.getViewCreater().newImageView(getContext());
+        AppCompatImageView imageView = ActionStyle.newImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setDuplicateParentStateEnabled(true);
         imageView.setBackgroundResource(actionBarItemBackground);
@@ -156,13 +151,13 @@ public class CustomBar extends ActionBar {
     }
 
     private AppCompatTextView newTextView(int width) {
-        AppCompatTextView textView = ViewCreater.getViewCreater().newTextView(getContext());
+        AppCompatTextView textView = ActionStyle.newTextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setEms(4);
         textView.setSingleLine();
         textView.setMinWidth(width);
         textView.setPadding(4, 0, 4, 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarActionTextSize * density);
         textView.setDuplicateParentStateEnabled(true);
         textView.setBackgroundResource(actionBarItemBackground);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -195,11 +190,11 @@ public class CustomBar extends ActionBar {
         if (action != null) {
             LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
             if (align == LEFT) {
-                leftLayout.addView(action.container, layoutParams);
+                leftLayout.addView(action.get(), layoutParams);
             } else if (align == RIGHT) {
-                rightLayout.addView(action.container, layoutParams);
+                rightLayout.addView(action.get(), layoutParams);
             } else {
-                centerLayout.addView(action.container, layoutParams);
+                centerLayout.addView(action.get(), layoutParams);
             }
         }
     }

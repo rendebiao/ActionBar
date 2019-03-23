@@ -8,17 +8,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.rdb.actionbar.CustomBar
+        <com.rdb.actionbar.ToolBar
             android:id="@+id/customBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.rdb.actionbar.CustomBar
+        <com.rdb.actionbar.ToolBar
             android:id="@+id/customBar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.rdb.actionbar.CustomBar
+        <com.rdb.actionbar.ToolBar
             android:id="@+id/customBar3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

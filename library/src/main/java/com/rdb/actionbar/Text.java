@@ -18,7 +18,7 @@ public class Text extends Action {
         this.tintColor = color;
         this.textView = textView;
         textView.setTextColor(color);
-        container.addView(textView);
+        get().addView(textView);
     }
 
     public Text setVisible(boolean visible) {

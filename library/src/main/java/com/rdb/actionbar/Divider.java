@@ -1,8 +1,9 @@
 package com.rdb.actionbar;
 
+import android.support.annotation.ColorInt;
 import android.view.View;
 
-public class Divider extends ViewHolder {
+public class Divider extends Holder {
 
     private View view;
 
@@ -13,6 +14,11 @@ public class Divider extends ViewHolder {
     @Override
     protected View get() {
         return view;
+    }
+
+    public Divider setColor(@ColorInt int color) {
+        view.setBackgroundColor(color);
+        return this;
     }
 
     public Divider setVisible(boolean visible) {

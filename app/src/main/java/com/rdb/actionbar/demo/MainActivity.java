@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.rdb.actionbar.Action;
-import com.rdb.actionbar.CustomBar;
 import com.rdb.actionbar.FloatingBar;
 import com.rdb.actionbar.Title;
+import com.rdb.actionbar.ToolBar;
 import com.rdb.menu.MenuHelper;
 import com.rdb.menu.MenuListener;
 
@@ -23,24 +23,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final CustomBar customBar = findViewById(R.id.customBar);
-        customBar.bindActivity(this);
+        final ToolBar toolBar = findViewById(R.id.customBar);
+        toolBar.bindActivity(this);
 //        customBar.showStatusView(true,true);//全屏时调用
-        customBar.getTitle().setText("CustomBar").setVisible(true);
-        customBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);
-        customBar.addImageAction(CustomBar.RIGHT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
-        customBar.addImageAction(CustomBar.RIGHT).setTag("share").setImageResource(R.drawable.core_ic_custombar_share, true).setVisible(true);
-        customBar.setActionListener(new Action.OnActionListener() {
+        toolBar.getTitle().setText("CustomBar").setVisible(true);
+        toolBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);
+        toolBar.addImageAction(ToolBar.RIGHT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true);
+        toolBar.addImageAction(ToolBar.RIGHT).setTag("share").setImageResource(R.drawable.core_ic_custombar_share, true);
+        toolBar.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
                 Toast.makeText(MainActivity.this, "CustomBar action id = " + action.getId() + " tag = " + action.getTag(), Toast.LENGTH_SHORT).show();
             }
         });
-        customBar.setOnTitleClickListener(new Title.OnTitleClickListener() {
+        toolBar.setOnTitleClickListener(new Title.OnTitleClickListener() {
             @Override
             public void onTitleClick() {
                 if (menuHelper == null) {
-                    menuHelper = MenuHelper.instance(MainActivity.this, customBar, true, new MenuListener.ActivityMenuListener(MainActivity.this));
+                    menuHelper = MenuHelper.instance(MainActivity.this, toolBar, true, new MenuListener.ActivityMenuListener(MainActivity.this));
                     menuHelper.setGravity(MenuHelper.CENTER);
                 }
                 menuHelper.toggleShow();
@@ -51,30 +51,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        customBar.getProgress().setProgress(50);
-        CustomBar customBar2 = findViewById(R.id.customBar2);
-        customBar2.bindActivity(this);
-        customBar2.setTitleAlignLeft(true);
-        customBar2.getTitle().setText("CustomBar").setVisible(true);
-        customBar2.getSecondTitle().setText("标题居左  Indeterminate进度条").setVisible(true);
-        customBar2.addImageAction(CustomBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_arrow_back, true).setVisible(true);
-        customBar2.setActionListener(new Action.OnActionListener() {
+        toolBar.getProgress().setProgress(50);
+        ToolBar toolBar2 = findViewById(R.id.customBar2);
+        toolBar2.bindActivity(this);
+        toolBar2.setTitleAlignLeft(true);
+        toolBar2.getTitle().setText("CustomBar").setVisible(true);
+        toolBar2.getSecondTitle().setText("标题居左  Indeterminate进度条");
+        toolBar2.addImageAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_arrow_back, true);
+        toolBar2.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
                 Toast.makeText(MainActivity.this, "CustomBar action id = " + action.getId() + " tag = " + action.getTag(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        customBar2.getProgress().setIndeterminate(true);
-        CustomBar customBar3 = findViewById(R.id.customBar3);
-        customBar3.bindActivity(this);
-        customBar3.apply(0xffD81B60, Color.WHITE);
-        customBar3.updateContentHeight((int) (getResources().getDisplayMetrics().density * 48));
-        customBar3.getTitle().setText("CustomBar").setVisible(true);
-        customBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
-        customBar3.addImageAction(CustomBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true).setVisible(true);
-        customBar3.addImageAction(CustomBar.LEFT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
-        customBar3.setActionListener(new Action.OnActionListener() {
+        toolBar2.getProgress().setIndeterminate(true);
+        ToolBar toolBar3 = findViewById(R.id.customBar3);
+        toolBar3.bindActivity(this);
+        toolBar3.apply(0xffD81B60, Color.WHITE);
+        toolBar3.updateContentHeight((int) (getResources().getDisplayMetrics().density * 48));
+        toolBar3.getTitle().setText("CustomBar").setVisible(true);
+        toolBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
+        toolBar3.addImageAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true);
+        toolBar3.addImageAction(ToolBar.LEFT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true);
+        toolBar3.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
                 Toast.makeText(MainActivity.this, "CustomBar action id = " + action.getId() + " tag = " + action.getTag(), Toast.LENGTH_SHORT).show();
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
         FloatingBar floatingBar = findViewById(R.id.floatingBar);
         floatingBar.bindActivity(this);
         floatingBar.setOrientation(LinearLayout.VERTICAL);
-        floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
-        floatingBar.addImageAction().setType(Action.OVERFLOW).setTag("add").setImageResource(R.drawable.core_ic_custombar_add, true).setVisible(true);
-        floatingBar.addImageAction().setTag("search").setImageResource(R.drawable.core_ic_custombar_search, true).setVisible(true);
-        floatingBar.addImageAction().setTag("refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true).setVisible(true);
+//        floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
+        floatingBar.addImageAction().setType(Action.OVERFLOW).setTag("add").setImageResource(R.drawable.core_ic_custombar_add, true);
+        floatingBar.addImageAction().setTag("search").setImageResource(R.drawable.core_ic_custombar_search, true);
+        floatingBar.addImageAction().setTag("refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true);
         floatingBar.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {

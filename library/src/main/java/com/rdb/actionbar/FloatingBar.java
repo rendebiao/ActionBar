@@ -23,7 +23,6 @@ import android.widget.ImageView;
 
 public class FloatingBar extends ActionBar {
 
-    private int minSize;
     private boolean expand;
     private int childWidth;
     private int childHeight;
@@ -36,7 +35,7 @@ public class FloatingBar extends ActionBar {
     private ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
     private ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
 
-    private Action.OnActionListener menuClickListener = new Action.OnActionListener() {
+    private Action.OnActionListener parentClickListener = new Action.OnActionListener() {
         @Override
         public void onActionClick(Action action) {
             if (expand) {
@@ -55,9 +54,9 @@ public class FloatingBar extends ActionBar {
             for (int i = 0; i < actions.size(); i++) {
                 Action action = actions.get(actions.keyAt(i));
                 if (action != parentAction && action.isVisible()) {
-                    action.container.setTranslationX((parentAction.getCenterX() - action.getCenterX()) * value);
-                    action.container.setTranslationY((parentAction.getCenterY() - action.getCenterY()) * value);
-                    action.container.setAlpha(1 - value);
+                    action.get().setTranslationX((parentAction.getCenterX() - action.getCenterX()) * value);
+                    action.get().setTranslationY((parentAction.getCenterY() - action.getCenterY()) * value);
+                    action.get().setAlpha(1 - value);
                 }
             }
         }
@@ -70,7 +69,20 @@ public class FloatingBar extends ActionBar {
                 actionClickListener.onActionClick(action);
             }
             if (expand) {
-                parentAction.container.callOnClick();
+                parentAction.get().callOnClick();
+            }
+        }
+    };
+
+    private Holder.OnVisibleChangeListener visibleChnageListener = new Holder.OnVisibleChangeListener() {
+
+        int visibleCount = 0;
+
+        @Override
+        public void onVisibleChanged(boolean visible) {
+            visibleCount += (visible ? 1 : -1);
+            if (parentAction != null) {
+                parentAction.setVisible(visibleCount > 0);
             }
         }
     };
@@ -86,8 +98,8 @@ public class FloatingBar extends ActionBar {
     public FloatingBar(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         super.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
-        minSize = (int) (36 * getResources().getDisplayMetrics().density);
-        parentWidth = parentHeight = childWidth = childHeight = (int) (54 * getResources().getDisplayMetrics().density);
+        parentWidth = parentHeight = (int) (Math.max(ActionStyle.floatingBarParentSize, 36) * density);
+        childWidth = childHeight = (int) (Math.max(ActionStyle.floatingBarChildSize, 36) * density);
         horizontal = getOrientation() == HORIZONTAL;
         initAnimator();
         super.setActionListener(actionClickListenerProxy);
@@ -114,7 +126,7 @@ public class FloatingBar extends ActionBar {
 
     public void switchExpand() {
         if (parentAction != null && parentAction.isVisible()) {
-            menuClickListener.onActionClick(parentAction);
+            parentClickListener.onActionClick(parentAction);
         }
     }
 
@@ -127,7 +139,7 @@ public class FloatingBar extends ActionBar {
     }
 
     private AppCompatImageView newImageView() {
-        AppCompatImageView imageView = ViewCreater.getViewCreater().newImageView(getContext());
+        AppCompatImageView imageView = ActionStyle.newImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setDuplicateParentStateEnabled(true);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -135,12 +147,11 @@ public class FloatingBar extends ActionBar {
     }
 
     private AppCompatTextView newTextView() {
-        AppCompatTextView textView = ViewCreater.getViewCreater().newTextView(getContext());
+        AppCompatTextView textView = ActionStyle.newTextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setEms(4);
         textView.setSingleLine();
-        textView.setPadding(4, 0, 4, 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.floatingBarActionTextSize);
         textView.setDuplicateParentStateEnabled(true);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return textView;
@@ -150,9 +161,9 @@ public class FloatingBar extends ActionBar {
         return addImageAction(false);
     }
 
-    private Image addImageAction(boolean isMenu) {
-        Image action = createImageAction(newImageView(), Color.WHITE, isMenu ? menuClickListener : null);
-        addActionView(action, isMenu);
+    private Image addImageAction(boolean parent) {
+        Image action = createImageAction(newImageView(), Color.WHITE, parent ? parentClickListener : null);
+        addActionView(action, parent);
         return action;
     }
 
@@ -168,25 +179,28 @@ public class FloatingBar extends ActionBar {
         return action;
     }
 
-    private void addActionView(Action action, boolean isMenu) {
+    private void addActionView(Action action, boolean parent) {
         if (action != null) {
-            action.container.setBackgroundDrawable(new BackgroundDrawable(colorPrimary));
-            LayoutParams lp = new LayoutParams(isMenu ? parentWidth : childWidth, isMenu ? parentHeight : childHeight);
-            int defaultPadding = (int) (density * 20);
+            action.get().setBackgroundDrawable(new BackgroundDrawable(colorPrimary));
+            LayoutParams lp = new LayoutParams(parent ? parentWidth : childWidth, parent ? parentHeight : childHeight);
+            int defaultMargin = (int) (density * ActionStyle.floatingBarMargin);
             if (horizontal) {
-                lp.setMargins(0, 0, defaultPadding, defaultPadding);
+                lp.setMargins(0, 0, defaultMargin, defaultMargin);
             } else {
-                lp.setMargins(0, 0, defaultPadding, defaultPadding);
+                lp.setMargins(0, 0, defaultMargin, defaultMargin);
             }
-            addView(action.container, getChildCount() < 3 ? getChildCount() : getChildCount() - 1, lp);
+            addView(action.get(), getChildCount() < 3 ? getChildCount() : getChildCount() - 1, lp);
+            if (!parent) {
+                action.setOnVisibleChnageListener(visibleChnageListener);
+            }
             if (Build.VERSION.SDK_INT >= 21) {
-                action.container.setElevation(density * 5);
+                action.get().setElevation(density * 5);
             }
-            if (actions.size() == 2 && parentAction == null && !isMenu) {
-                parentAction = addImageAction(true).setImageResource(parentDrawableId, true).setType(Type.OVERFLOW);
+            if (actions.size() == 2 && parentAction == null && !parent) {
+                parentAction = addImageAction(true).setImageResource(parentDrawableId, true).setType(Action.OVERFLOW);
             }
             if (parentAction != null) {
-                parentAction.container.bringToFront();
+                parentAction.get().bringToFront();
             }
         }
     }
@@ -203,14 +217,6 @@ public class FloatingBar extends ActionBar {
 //        super.setGravity(gravity);
     }
 
-    public void setActionSize(int parentWidth, int parentHeight, int childWidth, int childHeight) {
-        this.parentWidth = Math.max(minSize, parentWidth);
-        this.parentHeight = Math.max(minSize, parentHeight);
-        this.childWidth = Math.max(minSize, childWidth);
-        this.childHeight = Math.max(minSize, childHeight);
-        updateActionLayout();
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -218,9 +224,9 @@ public class FloatingBar extends ActionBar {
             for (int i = 0; i < actions.size(); i++) {
                 Action action = actions.get(actions.keyAt(i));
                 if (action != parentAction) {
-                    action.container.setTranslationX(parentAction.getCenterX() - action.getCenterX());
-                    action.container.setTranslationY(parentAction.getCenterY() - action.getCenterY());
-                    action.container.setAlpha(0);
+                    action.get().setTranslationX(parentAction.getCenterX() - action.getCenterX());
+                    action.get().setTranslationY(parentAction.getCenterY() - action.getCenterY());
+                    action.get().setAlpha(0);
                 }
             }
         }
@@ -228,7 +234,7 @@ public class FloatingBar extends ActionBar {
 
     public boolean performOptionMenu() {
         if (parentAction != null && parentAction.isVisible()) {
-            menuClickListener.onActionClick(parentAction);
+            parentClickListener.onActionClick(parentAction);
             return true;
         }
         return false;
@@ -239,7 +245,7 @@ public class FloatingBar extends ActionBar {
         super.updateBackground(backgroundColor);
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
-            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
+            BackgroundDrawable background = (BackgroundDrawable) action.get().getBackground();
             background.setColor(backgroundColor);
         }
     }
@@ -249,7 +255,7 @@ public class FloatingBar extends ActionBar {
             for (int i = 0; i < actions.size(); i++) {
                 Action action = actions.get(actions.keyAt(i));
                 boolean isParent = action == parentAction;
-                LayoutParams lp = (LayoutParams) action.container.getLayoutParams();
+                LayoutParams lp = (LayoutParams) action.get().getLayoutParams();
                 lp.width = isParent ? parentWidth : childWidth;
                 lp.height = isParent ? parentHeight : childHeight;
                 if (action instanceof Text) {
@@ -257,7 +263,7 @@ public class FloatingBar extends ActionBar {
                 } else if (action instanceof Image) {
                     ((Image) action).updateWidth(lp.width);
                 }
-                action.container.setLayoutParams(lp);
+                action.get().setLayoutParams(lp);
             }
         }
     }
@@ -265,7 +271,7 @@ public class FloatingBar extends ActionBar {
     public void setBackgroundStrokeWidth(int strokeWidth) {
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
-            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
+            BackgroundDrawable background = (BackgroundDrawable) action.get().getBackground();
             background.setStrokeWidth(strokeWidth);
         }
     }
@@ -273,7 +279,7 @@ public class FloatingBar extends ActionBar {
     public void setBackgroundStrokeColor(int strokeColor) {
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
-            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
+            BackgroundDrawable background = (BackgroundDrawable) action.get().getBackground();
             background.setStrokeColor(strokeColor);
         }
     }

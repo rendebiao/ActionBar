@@ -37,14 +37,14 @@ public abstract class ActionBar extends LinearLayout {
     private Action.OnActionListener actionListenerProxy = new Action.OnActionListener() {
         @Override
         public void onActionClick(Action action) {
-            Type actionType = action.getType();
-            if (actionType == Type.BACK) {
+            int actionType = action.getType();
+            if (actionType == Action.BACK) {
                 if (activity != null) {
                     activity.onBackPressed();
                 } else if (actionClickListener != null) {
                     actionClickListener.onActionClick(action);
                 }
-            } else if (actionType == Type.OVERFLOW) {
+            } else if (actionType == Action.OVERFLOW) {
                 if (activity != null) {
                     toggleOptionMenu(action);
                 } else if (actionClickListener != null) {
@@ -156,8 +156,8 @@ public abstract class ActionBar extends LinearLayout {
 
     protected boolean toggleOptionMenu(Action action) {
         if (action.isVisible()) {
-            Type actionType = action.getType();
-            if (actionType == Type.OVERFLOW && activity != null) {
+            int actionType = action.getType();
+            if (actionType == Action.OVERFLOW && activity != null) {
                 MenuHelper menuHelper = menuHelpers.get(action.getId());
                 if (menuHelper == null) {
                     menuHelper = MenuHelper.instance(getContext(), action.get(), false, menuListener);

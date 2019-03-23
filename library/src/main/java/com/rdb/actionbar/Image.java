@@ -18,7 +18,7 @@ public class Image extends Action {
         super(context, id, actionClickListener);
         this.tintColor = tintColor;
         this.imageView = imageView;
-        container.addView(imageView);
+        get().addView(imageView);
     }
 
     public Image setVisible(boolean visible) {
@@ -48,8 +48,12 @@ public class Image extends Action {
 
     public Image setImageResource(@DrawableRes int drawableId, boolean tint) {
         if (tint) {
-            imageView.setImageDrawable(AppCompatResources.getDrawable(imageView.getContext(), drawableId).getConstantState().newDrawable().mutate());
-            tintDrawable(tintColor);
+            try {
+                imageView.setImageDrawable(AppCompatResources.getDrawable(imageView.getContext(), drawableId).getConstantState().newDrawable().mutate());
+                tintDrawable(tintColor);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             imageView.setImageResource(drawableId);
         }
