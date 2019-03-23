@@ -18,7 +18,7 @@ import com.rdb.menu.OnMenuListener;
 
 import java.util.HashMap;
 
-abstract class ActionBar extends LinearLayout {
+public abstract class ActionBar extends LinearLayout {
 
     protected float density;
     protected int colorPrimary;
@@ -108,23 +108,23 @@ abstract class ActionBar extends LinearLayout {
         }
     }
 
-    protected Text createTextAction(Type type, String tag, AppCompatTextView textView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected Text createTextAction(AppCompatTextView textView, int foregroundColor, Action.OnActionListener actionClickListener) {
         idIndex++;
-        Text action = new Text(getContext(), idIndex, type, tag, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
+        Text action = new Text(getContext(), idIndex, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);
         return action;
     }
 
-    protected Image createImageAction(Type type, String tag, AppCompatImageView imageView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected Image createImageAction(AppCompatImageView imageView, int foregroundColor, Action.OnActionListener actionClickListener) {
         idIndex++;
-        Image action = new Image(getContext(), idIndex, type, tag, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
+        Image action = new Image(getContext(), idIndex, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);
         return action;
     }
 
-    protected Custom createCustomAction(Type type, String tag, Action.OnActionListener actionClickListener) {
+    protected Custom createCustomAction(Action.OnActionListener actionClickListener) {
         idIndex++;
-        Custom action = new Custom(getContext(), idIndex, type, tag, actionClickListener == null ? actionListenerProxy : actionClickListener);
+        Custom action = new Custom(getContext(), idIndex, actionClickListener == null ? actionListenerProxy : actionClickListener);
         addAction(action);
         return action;
     }

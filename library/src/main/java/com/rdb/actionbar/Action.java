@@ -9,16 +9,24 @@ public abstract class Action extends Container implements View.OnClickListener {
     private String tag;
     private OnActionListener actionListener;
 
-    protected Action(Context context, int id, Type type, String tag, OnActionListener actionListener) {
+    protected Action(Context context, int id, OnActionListener actionListener) {
         super(context, id);
-        this.type = type;
-        this.tag = tag;
         this.actionListener = actionListener;
         container.setOnClickListener(this);
     }
 
+    public Action setType(Type type) {
+        this.type = type;
+        return this;
+    }
+
     public Type getType() {
         return type;
+    }
+
+    public Action setTag(String tag) {
+        this.tag = tag;
+        return this;
     }
 
     public String getTag() {

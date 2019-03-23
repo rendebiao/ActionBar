@@ -2,14 +2,10 @@ package com.rdb.actionbar;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -34,10 +30,8 @@ public class FloatingBar extends ActionBar {
     private int parentWidth;
     private int parentHeight;
     private boolean horizontal;
-    private Image parentAction;
     private int parentDrawableId;
-    private int foregroundColor;
-    private int backgroundColor;
+    private Image parentAction;
     private Action.OnActionListener actionClickListener;
     private ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
     private ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
@@ -51,7 +45,6 @@ public class FloatingBar extends ActionBar {
                 startAnimator(expandAnimator);
             }
             expand = !expand;
-            action.container.setSelected(expand);
         }
     };
 
@@ -153,47 +146,44 @@ public class FloatingBar extends ActionBar {
         return textView;
     }
 
-    public Image addImageAction(Type type, String tag) {
-        return addImageAction(type, tag, false);
+    public Image addImageAction() {
+        return addImageAction(false);
     }
 
-    private Image addImageAction(Type type, String tag, boolean isMenu) {
-        Image action = createImageAction(type, tag, newImageView(), Color.WHITE, isMenu ? menuClickListener : null);
+    private Image addImageAction(boolean isMenu) {
+        Image action = createImageAction(newImageView(), Color.WHITE, isMenu ? menuClickListener : null);
         addActionView(action, isMenu);
         return action;
     }
 
-    public Text addTextAction(Type type, String tag) {
-        Text action = createTextAction(type, tag, newTextView(), Color.WHITE, null);
+    public Text addTextAction() {
+        Text action = createTextAction(newTextView(), Color.WHITE, null);
         addActionView(action, false);
         return action;
     }
 
-    public Custom addCustomAction(Type type, String tag) {
-        Custom action = createCustomAction(type, tag, null);
+    public Custom addCustomAction() {
+        Custom action = createCustomAction(null);
         addActionView(action, false);
         return action;
     }
 
     private void addActionView(Action action, boolean isMenu) {
         if (action != null) {
-            action.container.setBackgroundDrawable(new Background(colorPrimary));
+            action.container.setBackgroundDrawable(new BackgroundDrawable(colorPrimary));
             LayoutParams lp = new LayoutParams(isMenu ? parentWidth : childWidth, isMenu ? parentHeight : childHeight);
+            int defaultPadding = (int) (density * 20);
             if (horizontal) {
-                lp.setMargins(getChildCount() == 0 ? childWidth : childWidth / 4, 0, 0, 0);
+                lp.setMargins(0, 0, defaultPadding, defaultPadding);
             } else {
-                lp.setMargins(0, getChildCount() == 0 ? childHeight : childHeight / 4, 0, 0);
+                lp.setMargins(0, 0, defaultPadding, defaultPadding);
             }
             addView(action.container, getChildCount() < 3 ? getChildCount() : getChildCount() - 1, lp);
-            if (!isMenu && parentAction != null) {
-                action.container.setSelected(true);
+            if (Build.VERSION.SDK_INT >= 21) {
+                action.container.setElevation(density * 5);
             }
             if (actions.size() == 2 && parentAction == null && !isMenu) {
-                for (int i = 0; i < actions.size(); i++) {
-                    Action a = actions.get(actions.keyAt(i));
-                    a.container.setSelected(true);
-                }
-                parentAction = addImageAction(Type.OVERFLOW, null, true).setImageResource(parentDrawableId, true);
+                parentAction = addImageAction(true).setImageResource(parentDrawableId, true).setType(Type.OVERFLOW);
             }
             if (parentAction != null) {
                 parentAction.container.bringToFront();
@@ -249,7 +239,7 @@ public class FloatingBar extends ActionBar {
         super.updateBackground(backgroundColor);
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
-            Background background = (Background) action.container.getBackground();
+            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
             background.setColor(backgroundColor);
         }
     }
@@ -262,13 +252,6 @@ public class FloatingBar extends ActionBar {
                 LayoutParams lp = (LayoutParams) action.container.getLayoutParams();
                 lp.width = isParent ? parentWidth : childWidth;
                 lp.height = isParent ? parentHeight : childHeight;
-                if (isParent) {
-                    if (horizontal) {
-                        lp.setMargins(getChildCount() == 0 ? childWidth : childWidth / 4, 0, 0, 0);
-                    } else {
-                        lp.setMargins(0, getChildCount() == 0 ? childHeight : childHeight / 4, 0, 0);
-                    }
-                }
                 if (action instanceof Text) {
                     ((Text) action).updateMinWidth(lp.width);
                 } else if (action instanceof Image) {
@@ -279,78 +262,63 @@ public class FloatingBar extends ActionBar {
         }
     }
 
+    public void setBackgroundStrokeWidth(int strokeWidth) {
+        for (int i = 0; i < actions.size(); i++) {
+            Action action = actions.get(actions.keyAt(i));
+            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
+            background.setStrokeWidth(strokeWidth);
+        }
+    }
+
+    public void setBackgroundStrokeColor(int strokeColor) {
+        for (int i = 0; i < actions.size(); i++) {
+            Action action = actions.get(actions.keyAt(i));
+            BackgroundDrawable background = (BackgroundDrawable) action.container.getBackground();
+            background.setStrokeColor(strokeColor);
+        }
+    }
+
     @Override
     public void setActionListener(Action.OnActionListener listener) {
         this.actionClickListener = listener;
     }
 
-    class Background extends Drawable {
+    class BackgroundDrawable extends StateListDrawable {
 
-        private int color;
-        private int alphaColor;
-        private boolean pressed;
-        private boolean selected;
-        private Paint paint = new Paint();
-        private RectF rectF = new RectF();
+        private int strokeColor;
+        private int strokeWidth;
+        private GradientDrawable normalDrawable;
+        private GradientDrawable pressedDrawable;
 
-        public Background(int color) {
-            this.color = color;
-            alphaColor = Color.argb((int) (0.7f * 255), Color.red(color), Color.green(color), Color.blue(color));
-            paint.setAntiAlias(true);
+        public BackgroundDrawable(int color) {
+            strokeWidth = (int) (density * 1);
+            pressedDrawable = new GradientDrawable();
+            normalDrawable = new GradientDrawable();
+            pressedDrawable.setShape(GradientDrawable.OVAL);
+            normalDrawable.setShape(GradientDrawable.OVAL);
+            addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
+            addState(new int[]{}, normalDrawable);
+            setColor(color);
         }
 
         public void setColor(int color) {
-            this.color = color;
-            alphaColor = Color.argb((int) (0.7f * 255), Color.red(color), Color.green(color), Color.blue(color));
+            pressedDrawable.setColor(color);
+            normalDrawable.setColor(Color.argb((int) (0.7f * 255), Color.red(color), Color.green(color), Color.blue(color)));
             invalidateSelf();
         }
 
-        @Override
-        protected boolean onStateChange(int[] state) {
-            boolean newPressed = false;
-            boolean newSelected = false;
-            for (int value : state) {
-                if (value == android.R.attr.state_pressed) {
-                    newPressed = true;
-                } else if (value == android.R.attr.state_selected) {
-                    newSelected = true;
-                }
-            }
-            if (newPressed != pressed || newSelected != selected) {
-                pressed = newPressed;
-                selected = newSelected;
-                invalidateSelf();
-                return true;
-            }
-            return false;
+        public void setStrokeColor(int strokeColor) {
+            this.strokeColor = strokeColor;
+            pressedDrawable.setStroke(strokeWidth, strokeColor);
+            normalDrawable.setStroke(strokeWidth, strokeColor);
+            invalidateSelf();
         }
 
-        @Override
-        public void draw(@NonNull Canvas canvas) {
-            Rect bounds = getBounds();
-            rectF.set(bounds.left, bounds.top, bounds.right, bounds.bottom);
-            paint.setColor(pressed == selected ? alphaColor : color);
-            canvas.drawOval(rectF, paint);
-        }
-
-        @Override
-        public void setAlpha(int alpha) {
-
-        }
-
-        @Override
-        public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-        }
-
-        @Override
-        public int getOpacity() {
-            return PixelFormat.TRANSLUCENT;
-        }
-
-        @Override
-        public boolean isStateful() {
-            return true;
+        public void setStrokeWidth(int strokeWidth) {
+            this.strokeWidth = strokeWidth;
+            pressedDrawable.setStroke(strokeWidth, strokeColor);
+            normalDrawable.setStroke(strokeWidth, strokeColor);
+            invalidateSelf();
         }
     }
 }

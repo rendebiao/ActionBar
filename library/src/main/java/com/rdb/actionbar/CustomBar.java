@@ -167,24 +167,24 @@ public class CustomBar extends ActionBar {
         return textView;
     }
 
-    public Image addImageAction(Type type, String tag, @Align int align) {
-        return addImageAction(type, tag, align, curHeight);
+    public Image addImageAction(@Align int align) {
+        return addImageAction(align, curHeight);
     }
 
-    public Image addImageAction(Type type, String tag, @Align int align, int width) {
-        Image action = createImageAction(type, tag, newImageView(width), getForegroundColor(), null);
+    public Image addImageAction(@Align int align, int width) {
+        Image action = createImageAction(newImageView(width), getForegroundColor(), null);
         addActionView(action, align);
         return action;
     }
 
-    public Text addTextAction(Type type, String tag, @Align int align) {
-        Text action = createTextAction(type, tag, newTextView(curHeight), getForegroundColor(), null);
+    public Text addTextAction(@Align int align) {
+        Text action = createTextAction(newTextView(curHeight), getForegroundColor(), null);
         addActionView(action, align);
         return action;
     }
 
-    public Custom addCustomAction(Type type, String tag, @Align int align) {
-        Custom action = createCustomAction(type, tag, null);
+    public Custom addCustomAction(@Align int align) {
+        Custom action = createCustomAction(null);
         addActionView(action, align);
         return action;
     }

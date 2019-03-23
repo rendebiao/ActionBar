@@ -13,8 +13,8 @@ public class Text extends Action {
     private int tintColor;
     private AppCompatTextView textView;
 
-    protected Text(Context context, int id, Type type, String tag, AppCompatTextView textView, OnActionListener actionClickListener, int color) {
-        super(context, id, type, tag, actionClickListener);
+    protected Text(Context context, int id, AppCompatTextView textView, OnActionListener actionClickListener, int color) {
+        super(context, id, actionClickListener);
         this.tintColor = color;
         this.textView = textView;
         textView.setTextColor(color);
@@ -24,6 +24,17 @@ public class Text extends Action {
     @Override
     public Text addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
         super.addCustomView(view, layoutParams);
+        return this;
+    }
+
+    @Override
+    public Text setType(Type type) {
+        super.setType(type);
+        return this;
+    }
+
+    public Text setTag(String tag) {
+        super.setTag(tag);
         return this;
     }
 

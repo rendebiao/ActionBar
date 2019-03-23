@@ -14,8 +14,8 @@ public class Image extends Action {
     private int tintColor;
     private AppCompatImageView imageView;
 
-    protected Image(Context context, int id, Type type, String tag, AppCompatImageView imageView, OnActionListener actionClickListener, int tintColor) {
-        super(context, id, type, tag, actionClickListener);
+    protected Image(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int tintColor) {
+        super(context, id, actionClickListener);
         this.tintColor = tintColor;
         this.imageView = imageView;
         container.addView(imageView);
@@ -24,6 +24,17 @@ public class Image extends Action {
     @Override
     public Image addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
         super.addCustomView(view, layoutParams);
+        return this;
+    }
+
+    @Override
+    public Image setType(Type type) {
+        super.setType(type);
+        return this;
+    }
+
+    public Image setTag(String tag) {
+        super.setTag(tag);
         return this;
     }
 
