@@ -2,7 +2,7 @@ package com.rdb.menu;
 
 
 import android.content.Context;
-import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.view.MenuItem;
@@ -31,18 +31,23 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
     private float density;
     private MenuImpl menu;
     private PopupWindow window;
+    private int foregroundColor;
+    private int backgroundColor;
     private MenuListener menuListener;
     private MenuItemAdapter menuItemAdapter;
+    private GradientDrawable backgroundDrawable;
 
     private MenuHelper(Context context, View anchor, int style, boolean showIcon, MenuListener menuListener) {
         density = context.getResources().getDisplayMetrics().density;
         this.anchor = anchor;
         menu = new MenuImpl(context);
         window = new PopupWindow(context, null, style);
+        foregroundColor = MenuStyle.foregroundColor;
+        backgroundColor = MenuStyle.backgroundColor;
         ListView listView = new ListView(context);
         listView.setDivider(null);
         window.setContentView(listView);
-        menuItemAdapter = new MenuItemAdapter(menu.getMenuItems(), showIcon, density);
+        menuItemAdapter = new MenuItemAdapter(menu.getMenuItems(), showIcon, foregroundColor, density);
         window.setWidth((int) (density * MenuStyle.popupWidth));
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setOutsideTouchable(true);
@@ -50,10 +55,10 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
             window.setElevation(density * MenuStyle.backgroundElevation);
         }
         window.setFocusable(true);
-        PaintDrawable drawable = new PaintDrawable(MenuStyle.backgroundColor);
-        drawable.setCornerRadius(MenuStyle.backgroundCornerRadius * density);
-        drawable.getPaint().setColor(MenuStyle.backgroundColor);
-        window.setBackgroundDrawable(drawable);
+        backgroundDrawable = new GradientDrawable();
+        backgroundDrawable.setColor(backgroundColor);
+        backgroundDrawable.setCornerRadius(MenuStyle.backgroundCornerRadius * density);
+        window.setBackgroundDrawable(backgroundDrawable);
         listView.setAdapter(menuItemAdapter);
         listView.setOnItemClickListener(this);
         window.setAnimationStyle(-1);
@@ -112,6 +117,7 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
             } else if (gravity == RIGHT_BOTTOM) {
                 newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
             }
+            apply(MenuStyle.backgroundColor, MenuStyle.foregroundColor);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 window.showAsDropDown(anchor, newOffsetX, newOffsetY, LEFT_BOTTOM);
             } else {
@@ -119,6 +125,17 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
             }
         }
         return window.isShowing();
+    }
+
+    private void apply(int backgroundColor, int foregroundColor) {
+        if (this.foregroundColor != foregroundColor || this.backgroundColor != backgroundColor) {
+            this.foregroundColor = foregroundColor;
+            this.backgroundColor = backgroundColor;
+            backgroundDrawable.setColor(backgroundColor);
+            backgroundDrawable.invalidateSelf();
+            menuItemAdapter.setForegroundColor(foregroundColor);
+            menuItemAdapter.notifyDataSetChanged();
+        }
     }
 
     public boolean isPopupShow() {

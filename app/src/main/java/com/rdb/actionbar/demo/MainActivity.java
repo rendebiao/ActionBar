@@ -23,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //MenuStyle设置菜单样式
+        //ActionStyle设置ToolBar和FloatingBar样式
         final ToolBar toolBar = findViewById(R.id.customBar);
         toolBar.bindActivity(this);
 //        customBar.showStatusView(true,true);//全屏时调用
-        toolBar.getTitle().setText("CustomBar").setVisible(true);
-        toolBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);
+        toolBar.getTitle().setText("CustomBar").setVisible(true);//主标题 默认不显示
+        toolBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);//副标题 默认不显示
+        toolBar.getDivider().setColor(Color.WHITE);//底部divider 默认显示 颜色透明
         toolBar.addImageAction(ToolBar.RIGHT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true);
         toolBar.addImageAction(ToolBar.RIGHT).setTag("share").setImageResource(R.drawable.core_ic_custombar_share, true);
         toolBar.setActionListener(new Action.OnActionListener() {
@@ -65,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toolBar2.getProgress().setIndeterminate(true);
         ToolBar toolBar3 = findViewById(R.id.customBar3);
         toolBar3.bindActivity(this);
         toolBar3.apply(0xffD81B60, Color.WHITE);
         toolBar3.updateContentHeight((int) (getResources().getDisplayMetrics().density * 48));
+        toolBar3.getProgress().setIndeterminate(true);
         toolBar3.getTitle().setText("CustomBar").setVisible(true);
         toolBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
         toolBar3.addImageAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true);

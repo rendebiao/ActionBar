@@ -9,44 +9,44 @@ import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-public class Image extends Action {
+public class ImageAction extends Action {
 
     private int tintColor;
     private AppCompatImageView imageView;
 
-    protected Image(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int tintColor) {
+    protected ImageAction(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int tintColor) {
         super(context, id, actionClickListener);
         this.tintColor = tintColor;
         this.imageView = imageView;
         get().addView(imageView);
     }
 
-    public Image setVisible(boolean visible) {
+    public ImageAction setVisible(boolean visible) {
         super.setVisibleInner(visible);
         return this;
     }
 
-    public Image addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
+    public ImageAction addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
         super.addCustomViewInner(view, layoutParams);
         return this;
     }
 
-    public Image setType(@Type int type) {
+    public ImageAction setType(@Type int type) {
         super.setTypeInner(type);
         return this;
     }
 
-    public Image setTag(String tag) {
+    public ImageAction setTag(String tag) {
         super.setTagInner(tag);
         return this;
     }
 
-    public Image setMargin(int left, int right) {
+    public ImageAction setMargin(int left, int right) {
         super.setMarginInner(left, right);
         return this;
     }
 
-    public Image setImageResource(@DrawableRes int drawableId, boolean tint) {
+    public ImageAction setImageResource(@DrawableRes int drawableId, boolean tint) {
         if (tint) {
             try {
                 imageView.setImageDrawable(AppCompatResources.getDrawable(imageView.getContext(), drawableId).getConstantState().newDrawable().mutate());
@@ -60,7 +60,7 @@ public class Image extends Action {
         return this;
     }
 
-    public Image setImageDrawable(Drawable drawable) {
+    public ImageAction setImageDrawable(Drawable drawable) {
         imageView.setImageDrawable(drawable);
         return this;
     }

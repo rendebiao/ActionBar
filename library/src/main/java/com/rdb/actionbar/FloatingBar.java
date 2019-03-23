@@ -30,7 +30,7 @@ public class FloatingBar extends ActionBar {
     private int parentHeight;
     private boolean horizontal;
     private int parentDrawableId;
-    private Image parentAction;
+    private ImageAction parentAction;
     private Action.OnActionListener actionClickListener;
     private ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
     private ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
@@ -157,24 +157,24 @@ public class FloatingBar extends ActionBar {
         return textView;
     }
 
-    public Image addImageAction() {
+    public ImageAction addImageAction() {
         return addImageAction(false);
     }
 
-    private Image addImageAction(boolean parent) {
-        Image action = createImageAction(newImageView(), Color.WHITE, parent ? parentClickListener : null);
+    private ImageAction addImageAction(boolean parent) {
+        ImageAction action = createImageAction(newImageView(), Color.WHITE, parent ? parentClickListener : null);
         addActionView(action, parent);
         return action;
     }
 
-    public Text addTextAction() {
-        Text action = createTextAction(newTextView(), Color.WHITE, null);
+    public TextAction addTextAction() {
+        TextAction action = createTextAction(newTextView(), Color.WHITE, null);
         addActionView(action, false);
         return action;
     }
 
-    public Custom addCustomAction() {
-        Custom action = createCustomAction(null);
+    public CustomAction addCustomAction() {
+        CustomAction action = createCustomAction(null);
         addActionView(action, false);
         return action;
     }
@@ -258,10 +258,10 @@ public class FloatingBar extends ActionBar {
                 LayoutParams lp = (LayoutParams) action.get().getLayoutParams();
                 lp.width = isParent ? parentWidth : childWidth;
                 lp.height = isParent ? parentHeight : childHeight;
-                if (action instanceof Text) {
-                    ((Text) action).updateMinWidth(lp.width);
-                } else if (action instanceof Image) {
-                    ((Image) action).updateWidth(lp.width);
+                if (action instanceof TextAction) {
+                    ((TextAction) action).updateMinWidth(lp.width);
+                } else if (action instanceof ImageAction) {
+                    ((ImageAction) action).updateWidth(lp.width);
                 }
                 action.get().setLayoutParams(lp);
             }

@@ -164,24 +164,24 @@ public class ToolBar extends ActionBar {
         return textView;
     }
 
-    public Image addImageAction(@Align int align) {
+    public ImageAction addImageAction(@Align int align) {
         return addImageAction(align, curHeight);
     }
 
-    public Image addImageAction(@Align int align, int width) {
-        Image action = createImageAction(newImageView(width), getForegroundColor(), null);
+    public ImageAction addImageAction(@Align int align, int width) {
+        ImageAction action = createImageAction(newImageView(width), getForegroundColor(), null);
         addActionView(action, align);
         return action;
     }
 
-    public Text addTextAction(@Align int align) {
-        Text action = createTextAction(newTextView(curHeight), getForegroundColor(), null);
+    public TextAction addTextAction(@Align int align) {
+        TextAction action = createTextAction(newTextView(curHeight), getForegroundColor(), null);
         addActionView(action, align);
         return action;
     }
 
-    public Custom addCustomAction(@Align int align) {
-        Custom action = createCustomAction(null);
+    public CustomAction addCustomAction(@Align int align) {
+        CustomAction action = createCustomAction(null);
         addActionView(action, align);
         return action;
     }
@@ -239,10 +239,10 @@ public class ToolBar extends ActionBar {
             contentView.setLayoutParams(lp);
             for (int i = 0; i < actions.size(); i++) {
                 Action action = actions.get(actions.keyAt(i));
-                if (action instanceof Text) {
-                    ((Text) action).updateMinWidth(curHeight);
-                } else if (action instanceof Image) {
-                    ((Image) action).updateWidth(curHeight);
+                if (action instanceof TextAction) {
+                    ((TextAction) action).updateMinWidth(curHeight);
+                } else if (action instanceof ImageAction) {
+                    ((ImageAction) action).updateWidth(curHeight);
                 }
             }
         }

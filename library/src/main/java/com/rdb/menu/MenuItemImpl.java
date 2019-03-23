@@ -73,7 +73,7 @@ class MenuItemImpl implements MenuItem {
     @Override
     public MenuItem setIcon(int iconRes) {
         try {
-            this.icon = AppCompatResources.getDrawable(context, iconRes);
+            this.icon = AppCompatResources.getDrawable(context, iconRes).getConstantState().newDrawable().mutate();
         } catch (Exception e) {
 
         }

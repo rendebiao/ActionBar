@@ -7,14 +7,14 @@ import android.support.v7.widget.AppCompatTextView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class ActionStyle {
+public class ActionStyle {
 
     public static int toolBarHeight = 42;
     public static int toolBarTitleSize = 17;
     public static int toolBarSecondTitleSize = 13;
     public static int toolBarActionTextSize = 13;
-    public static int toolBarProgressHeight = 2;
     public static int toolBarDividerHeight = 1;
+    public static int toolBarProgressHeight = 2;
 
     public static int floatingBarParentSize = 54;
     public static int floatingBarChildSize = 54;

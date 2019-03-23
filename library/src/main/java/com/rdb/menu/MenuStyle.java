@@ -11,11 +11,11 @@ import java.lang.reflect.InvocationTargetException;
 public class MenuStyle {
 
     public static int backgroundColor = Color.WHITE;
+    public static int foregroundColor = Color.BLACK;
     public static int backgroundElevation = 5;
     public static int backgroundCornerRadius = 2;
     public static int menuItemHeight = 42;
     public static int menuItemTextSize = 13;
-    public static int menuItemTextColor = Color.BLACK;
     public static int menuItemPaddingHorizontal = 12;
     public static int menuItemIconSize = 32;
     public static int menuItemIconPadding = 8;

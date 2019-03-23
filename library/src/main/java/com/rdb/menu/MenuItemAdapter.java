@@ -1,5 +1,7 @@
 package com.rdb.menu;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -19,14 +21,21 @@ class MenuItemAdapter extends BaseAdapter {
     private int textId;
     private float density;
     private boolean showIcon;
+    private int foregroundColor;
     private List<MenuItemImpl> menuItems;
 
-    public MenuItemAdapter(List<MenuItemImpl> menuItems, boolean showIcon, float density) {
+    public MenuItemAdapter(List<MenuItemImpl> menuItems, boolean showIcon, int foregroundColor, float density) {
         this.density = density;
         this.showIcon = showIcon;
         this.menuItems = menuItems;
+        this.foregroundColor = foregroundColor;
         iconId = ViewCompat.generateViewId();
         textId = ViewCompat.generateViewId();
+    }
+
+    public void setForegroundColor(int foregroundColor) {
+        this.foregroundColor = foregroundColor;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -67,7 +76,7 @@ class MenuItemAdapter extends BaseAdapter {
             textView.setId(textId);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuStyle.menuItemTextSize);
-            textView.setTextColor(MenuStyle.menuItemTextColor);
+            textView.setTextColor(foregroundColor);
             layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuStyle.menuItemHeight * density));
             ((LinearLayout) convertView).addView(textView, layoutParams);
         } else {
@@ -76,7 +85,11 @@ class MenuItemAdapter extends BaseAdapter {
         }
         MenuItemImpl menuItem = getItem(position);
         if (showIcon) {
-            iconView.setImageDrawable(menuItem.getIcon());
+            Drawable drawable = menuItem.getIcon();
+            iconView.setImageDrawable(drawable);
+            if (drawable != null) {
+                drawable.setColorFilter(foregroundColor, PorterDuff.Mode.SRC_IN);
+            }
         }
         textView.setText(menuItem.getTitle());
         return convertView;

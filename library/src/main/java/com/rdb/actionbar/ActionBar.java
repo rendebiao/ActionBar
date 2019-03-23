@@ -100,31 +100,31 @@ public abstract class ActionBar extends LinearLayout {
     protected void updateForeground(int foregroundColor) {
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
-            if (action instanceof Text) {
-                ((Text) action).setTextColor(foregroundColor);
-            } else if (action instanceof Image) {
-                ((Image) action).setTintColor(foregroundColor);
+            if (action instanceof TextAction) {
+                ((TextAction) action).setTextColor(foregroundColor);
+            } else if (action instanceof ImageAction) {
+                ((ImageAction) action).setTintColor(foregroundColor);
             }
         }
     }
 
-    protected Text createTextAction(AppCompatTextView textView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected TextAction createTextAction(AppCompatTextView textView, int foregroundColor, Action.OnActionListener actionClickListener) {
         idIndex++;
-        Text action = new Text(getContext(), idIndex, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
+        TextAction action = new TextAction(getContext(), idIndex, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);
         return action;
     }
 
-    protected Image createImageAction(AppCompatImageView imageView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected ImageAction createImageAction(AppCompatImageView imageView, int foregroundColor, Action.OnActionListener actionClickListener) {
         idIndex++;
-        Image action = new Image(getContext(), idIndex, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
+        ImageAction action = new ImageAction(getContext(), idIndex, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);
         return action;
     }
 
-    protected Custom createCustomAction(Action.OnActionListener actionClickListener) {
+    protected CustomAction createCustomAction(Action.OnActionListener actionClickListener) {
         idIndex++;
-        Custom action = new Custom(getContext(), idIndex, actionClickListener == null ? actionListenerProxy : actionClickListener);
+        CustomAction action = new CustomAction(getContext(), idIndex, actionClickListener == null ? actionListenerProxy : actionClickListener);
         addAction(action);
         return action;
     }
