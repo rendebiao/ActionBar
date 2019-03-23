@@ -21,26 +21,28 @@ public class Image extends Action {
         container.addView(imageView);
     }
 
-    @Override
-    public Image addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
-        super.addCustomView(view, layoutParams);
+    public Image setVisible(boolean visible) {
+        super.setVisibleInner(visible);
         return this;
     }
 
-    @Override
-    public Image setType(Type type) {
-        super.setType(type);
+    public Image addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
+        super.addCustomViewInner(view, layoutParams);
+        return this;
+    }
+
+    public Image setType(@Type int type) {
+        super.setTypeInner(type);
         return this;
     }
 
     public Image setTag(String tag) {
-        super.setTag(tag);
+        super.setTagInner(tag);
         return this;
     }
 
-    @Override
     public Image setMargin(int left, int right) {
-        super.setMargin(left, right);
+        super.setMarginInner(left, right);
         return this;
     }
 

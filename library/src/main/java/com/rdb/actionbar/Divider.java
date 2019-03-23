@@ -14,4 +14,9 @@ public class Divider extends ViewHolder {
     protected View get() {
         return view;
     }
+
+    public Divider setVisible(boolean visible) {
+        super.setVisibleInner(visible);
+        return this;
+    }
 }

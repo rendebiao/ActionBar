@@ -52,7 +52,7 @@ class MenuItemAdapter extends BaseAdapter {
         AppCompatTextView textView;
         if (convertView == null) {
             convertView = new LinearLayout(parent.getContext());
-            int padding = (int) (MenuConfig.menuPaddingHorizontal * density);
+            int padding = (int) (MenuStyle.menuPaddingHorizontal * density);
             convertView.setPadding(padding, 0, padding, 0);
             ((LinearLayout) convertView).setGravity(Gravity.CENTER_VERTICAL);
             LinearLayout.LayoutParams layoutParams = null;
@@ -60,17 +60,17 @@ class MenuItemAdapter extends BaseAdapter {
                 iconView = ViewCreater.getViewCreater().newImageView(parent.getContext());
                 iconView.setId(iconId);
                 iconView.setScaleType(ImageView.ScaleType.CENTER);
-                int iconSize = (int) (MenuConfig.menuIconSize * density);
+                int iconSize = (int) (MenuStyle.menuIconSize * density);
                 layoutParams = new LinearLayout.LayoutParams(iconSize, iconSize);
-                layoutParams.setMargins(0, 0, (int) (MenuConfig.menuIconPadding * density), 0);
+                layoutParams.setMargins(0, 0, (int) (MenuStyle.menuIconPadding * density), 0);
                 ((LinearLayout) convertView).addView(iconView, layoutParams);
             }
             textView = ViewCreater.getViewCreater().newTextView(parent.getContext());
             textView.setId(textId);
             textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuConfig.textSize);
-            textView.setTextColor(MenuConfig.textColor);
-            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuConfig.menuHeight * density));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuStyle.textSize);
+            textView.setTextColor(MenuStyle.textColor);
+            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuStyle.menuHeight * density));
             ((LinearLayout) convertView).addView(textView, layoutParams);
         } else {
             iconView = convertView.findViewById(iconId);

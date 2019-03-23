@@ -21,26 +21,28 @@ public class Text extends Action {
         container.addView(textView);
     }
 
-    @Override
-    public Text addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
-        super.addCustomView(view, layoutParams);
+    public Text setVisible(boolean visible) {
+        super.setVisibleInner(visible);
         return this;
     }
 
-    @Override
-    public Text setType(Type type) {
-        super.setType(type);
+    public Text addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
+        super.addCustomViewInner(view, layoutParams);
+        return this;
+    }
+
+    public Text setType(@Type int type) {
+        super.setTypeInner(type);
         return this;
     }
 
     public Text setTag(String tag) {
-        super.setTag(tag);
+        super.setTagInner(tag);
         return this;
     }
 
-    @Override
     public Text setMargin(int left, int right) {
-        super.setMargin(left, right);
+        super.setMarginInner(left, right);
         return this;
     }
 

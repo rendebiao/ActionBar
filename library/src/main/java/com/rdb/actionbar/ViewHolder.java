@@ -10,7 +10,7 @@ abstract class ViewHolder {
         return get().getVisibility() == View.VISIBLE;
     }
 
-    public void setVisible(boolean visible) {
+    protected void setVisibleInner(boolean visible) {
         get().setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 }

@@ -10,26 +10,28 @@ public class Custom extends Action {
         super(context, id, actionClickListener);
     }
 
-    @Override
-    public Custom addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
-        super.addCustomView(view, layoutParams);
+    public Custom setVisible(boolean visible) {
+        super.setVisibleInner(visible);
         return this;
     }
 
-    @Override
-    public Custom setType(Type type) {
-        super.setType(type);
+    public Custom addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
+        super.addCustomViewInner(view, layoutParams);
+        return this;
+    }
+
+    public Custom setType(@Type int type) {
+        super.setTypeInner(type);
         return this;
     }
 
     public Custom setTag(String tag) {
-        super.setTag(tag);
+        super.setTagInner(tag);
         return this;
     }
 
-    @Override
     public Custom setMargin(int left, int right) {
-        super.setMargin(left, right);
+        super.setMarginInner(left, right);
         return this;
     }
 }

@@ -12,11 +12,11 @@ abstract class Container extends ViewHolder {
     protected Container(Context context, int id) {
         this.id = id;
         container = new FrameLayout(context);
+        container.setVisibility(View.GONE);
     }
 
-    public Container addCustomView(View view, FrameLayout.LayoutParams layoutParams) {
+    protected void addCustomViewInner(View view, FrameLayout.LayoutParams layoutParams) {
         container.addView(view, layoutParams);
-        return this;
     }
 
     @Override
@@ -36,12 +36,11 @@ abstract class Container extends ViewHolder {
         return (container.getTop() + container.getBottom()) / 2;
     }
 
-    public Container setMargin(int left, int right) {
+    public void setMarginInner(int left, int right) {
         if (container.getChildCount() > 0) {
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) container.getChildAt(0).getLayoutParams();
             layoutParams.leftMargin = left;
             layoutParams.rightMargin = right;
         }
-        return this;
     }
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public interface OnMenuListener {
+public interface MenuListener {
 
     boolean onCreateMenu(Menu menu);
 
@@ -14,7 +14,7 @@ public interface OnMenuListener {
 
     void onMenuClosed(Menu menu);
 
-    class ActivityMenuListener implements OnMenuListener {
+    class ActivityMenuListener implements MenuListener {
 
         protected Activity activity;
 

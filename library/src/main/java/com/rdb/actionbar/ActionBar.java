@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.rdb.menu.MenuHelper;
-import com.rdb.menu.OnMenuListener;
+import com.rdb.menu.MenuListener;
 
 import java.util.HashMap;
 
@@ -29,7 +29,7 @@ public abstract class ActionBar extends LinearLayout {
     private int idIndex;
     private int foregroundColor;
     private int backgroundColor;
-    private OnMenuListener menuListener;
+    private MenuListener menuListener;
     private Action.OnActionListener actionClickListener;
     private HashMap<String, Action> actionTags = new HashMap<>();
     private SparseArray<MenuHelper> menuHelpers = new SparseArray<>();
@@ -81,7 +81,7 @@ public abstract class ActionBar extends LinearLayout {
 
     public void bindActivity(AppCompatActivity activity) {
         this.activity = activity;
-        menuListener = new OnMenuListener.ActivityMenuListener(activity);
+        menuListener = new MenuListener.ActivityMenuListener(activity);
     }
 
     public void apply(int backgroundColor, int foregroundColor) {

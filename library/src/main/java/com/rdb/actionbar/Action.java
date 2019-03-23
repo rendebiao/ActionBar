@@ -1,12 +1,17 @@
 package com.rdb.actionbar;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.view.View;
 
 public abstract class Action extends Container implements View.OnClickListener {
 
-    private Type type;
+    public static final int BACK = 0;
+    public static final int FINISH = 1;
+    public static final int OVERFLOW = 2;
     private String tag;
+    private @Type
+    int type;
     private OnActionListener actionListener;
 
     protected Action(Context context, int id, OnActionListener actionListener) {
@@ -15,18 +20,17 @@ public abstract class Action extends Container implements View.OnClickListener {
         container.setOnClickListener(this);
     }
 
-    public Action setType(Type type) {
+    protected void setTypeInner(@Type int type) {
         this.type = type;
-        return this;
     }
 
-    public Type getType() {
+    public @Type
+    int getType() {
         return type;
     }
 
-    public Action setTag(String tag) {
+    protected void setTagInner(String tag) {
         this.tag = tag;
-        return this;
     }
 
     public String getTag() {
@@ -40,5 +44,9 @@ public abstract class Action extends Container implements View.OnClickListener {
 
     public interface OnActionListener {
         void onActionClick(Action action);
+    }
+
+    @IntDef({BACK, FINISH, OVERFLOW})
+    public @interface Type {
     }
 }

@@ -12,9 +12,8 @@ import com.rdb.actionbar.Action;
 import com.rdb.actionbar.CustomBar;
 import com.rdb.actionbar.FloatingBar;
 import com.rdb.actionbar.Title;
-import com.rdb.actionbar.Type;
 import com.rdb.menu.MenuHelper;
-import com.rdb.menu.OnMenuListener;
+import com.rdb.menu.MenuListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 //        customBar.showStatusView(true,true);//全屏时调用
         customBar.getTitle().setText("CustomBar").setVisible(true);
         customBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);
-        customBar.addImageAction(CustomBar.RIGHT).setType(Type.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
+        customBar.addImageAction(CustomBar.RIGHT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
         customBar.addImageAction(CustomBar.RIGHT).setTag("share").setImageResource(R.drawable.core_ic_custombar_share, true).setVisible(true);
         customBar.setActionListener(new Action.OnActionListener() {
             @Override
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTitleClick() {
                 if (menuHelper == null) {
-                    menuHelper = MenuHelper.instance(MainActivity.this, customBar, true, new OnMenuListener.ActivityMenuListener(MainActivity.this));
+                    menuHelper = MenuHelper.instance(MainActivity.this, customBar, true, new MenuListener.ActivityMenuListener(MainActivity.this));
                     menuHelper.setGravity(MenuHelper.CENTER);
                 }
                 menuHelper.toggleShow();
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         customBar2.setTitleAlignLeft(true);
         customBar2.getTitle().setText("CustomBar").setVisible(true);
         customBar2.getSecondTitle().setText("标题居左  Indeterminate进度条").setVisible(true);
-        customBar2.addImageAction(CustomBar.LEFT).setType(Type.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_arrow_back, true).setVisible(true);
+        customBar2.addImageAction(CustomBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_arrow_back, true).setVisible(true);
         customBar2.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
@@ -73,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         customBar3.updateContentHeight((int) (getResources().getDisplayMetrics().density * 48));
         customBar3.getTitle().setText("CustomBar").setVisible(true);
         customBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
-        customBar3.addImageAction(CustomBar.LEFT).setType(Type.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true).setVisible(true);
-        customBar3.addImageAction(CustomBar.LEFT).setType(Type.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
+        customBar3.addImageAction(CustomBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true).setVisible(true);
+        customBar3.addImageAction(CustomBar.LEFT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
         customBar3.setActionListener(new Action.OnActionListener() {
             @Override
             public void onActionClick(Action action) {
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         floatingBar.bindActivity(this);
         floatingBar.setOrientation(LinearLayout.VERTICAL);
         floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
-        floatingBar.addImageAction().setType(Type.OVERFLOW).setTag("add").setImageResource(R.drawable.core_ic_custombar_add, true).setVisible(true);
+        floatingBar.addImageAction().setType(Action.OVERFLOW).setTag("add").setImageResource(R.drawable.core_ic_custombar_add, true).setVisible(true);
         floatingBar.addImageAction().setTag("search").setImageResource(R.drawable.core_ic_custombar_search, true).setVisible(true);
         floatingBar.addImageAction().setTag("refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true).setVisible(true);
         floatingBar.setActionListener(new Action.OnActionListener() {

@@ -30,6 +30,11 @@ public class Title extends ViewHolder implements View.OnClickListener {
         return textView;
     }
 
+    public Title setVisible(boolean visible) {
+        super.setVisibleInner(visible);
+        return this;
+    }
+
     public Title setText(int resid) {
         textView.setText(resid);
         return this;

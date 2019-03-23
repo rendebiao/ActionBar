@@ -105,6 +105,7 @@ public class CustomBar extends ActionBar {
         titleView.setSingleLine();
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
         titleLayout.addView(titleView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        titleView.setVisibility(View.GONE);
         AppCompatTextView titleSecondView = new AppCompatTextView(context);
         titleSecondView.setGravity(Gravity.CENTER);
         titleSecondView.setSingleLine();
@@ -112,6 +113,7 @@ public class CustomBar extends ActionBar {
         LayoutParams layoutParams1 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams1.setMargins(0, (int) (-3 * density), 0, 0);
         titleLayout.addView(titleSecondView, layoutParams1);
+        titleSecondView.setVisibility(View.GONE);
         RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams2.addRule(RelativeLayout.CENTER_VERTICAL);
         contentView.addView(titleLayout, layoutParams2);

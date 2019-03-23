@@ -31,10 +31,10 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
     private float density;
     private MenuImpl menu;
     private PopupWindow window;
-    private OnMenuListener menuListener;
+    private MenuListener menuListener;
     private MenuItemAdapter menuItemAdapter;
 
-    private MenuHelper(Context context, View anchor, int style, boolean showIcon, OnMenuListener menuListener) {
+    private MenuHelper(Context context, View anchor, int style, boolean showIcon, MenuListener menuListener) {
         density = context.getResources().getDisplayMetrics().density;
         this.anchor = anchor;
         menu = new MenuImpl(context);
@@ -43,16 +43,16 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
         listView.setDivider(null);
         window.setContentView(listView);
         menuItemAdapter = new MenuItemAdapter(menu.getMenuItems(), showIcon, density);
-        window.setWidth((int) (density * MenuConfig.popupWidth));
+        window.setWidth((int) (density * MenuStyle.popupWidth));
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setOutsideTouchable(true);
         if (Build.VERSION.SDK_INT >= 21) {
-            window.setElevation(density * MenuConfig.backgroundElevation);
+            window.setElevation(density * MenuStyle.backgroundElevation);
         }
         window.setFocusable(true);
-        PaintDrawable drawable = new PaintDrawable(MenuConfig.backgroundColor);
-        drawable.setCornerRadius(MenuConfig.backgroundCornerRadius * density);
-        drawable.getPaint().setColor(MenuConfig.backgroundColor);
+        PaintDrawable drawable = new PaintDrawable(MenuStyle.backgroundColor);
+        drawable.setCornerRadius(MenuStyle.backgroundCornerRadius * density);
+        drawable.getPaint().setColor(MenuStyle.backgroundColor);
         window.setBackgroundDrawable(drawable);
         listView.setAdapter(menuItemAdapter);
         listView.setOnItemClickListener(this);
@@ -63,11 +63,11 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
         this.menuListener = menuListener;
     }
 
-    public static MenuHelper instance(Context context, View anchor, boolean showIcon, OnMenuListener menuListener) {
+    public static MenuHelper instance(Context context, View anchor, boolean showIcon, MenuListener menuListener) {
         return new MenuHelper(context, anchor, 0, showIcon, menuListener);
     }
 
-    public static MenuHelper instance(Context context, View anchor, int style, boolean showIcon, OnMenuListener menuListener) {
+    public static MenuHelper instance(Context context, View anchor, int style, boolean showIcon, MenuListener menuListener) {
         return new MenuHelper(context, anchor, style, showIcon, menuListener);
     }
 

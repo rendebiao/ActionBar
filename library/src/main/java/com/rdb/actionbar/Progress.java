@@ -23,6 +23,11 @@ public class Progress extends ViewHolder {
         return progressBar;
     }
 
+    public Progress setVisible(boolean visible) {
+        super.setVisibleInner(visible);
+        return this;
+    }
+
     public Progress setColor(int color) {
         progressBar.setColor(color);
         return this;

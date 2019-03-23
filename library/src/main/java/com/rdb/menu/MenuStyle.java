@@ -2,7 +2,7 @@ package com.rdb.menu;
 
 import android.graphics.Color;
 
-public class MenuConfig {
+public class MenuStyle {
 
     public static int textSize = 15;
     public static int textColor = Color.BLACK;
