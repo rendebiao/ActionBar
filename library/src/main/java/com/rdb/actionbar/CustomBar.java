@@ -27,6 +27,7 @@ public class CustomBar extends ActionBar {
     private Title title;
     private Title secondTitle;
     private Divider divider;
+    private Progress progress;
     private StatusBar statusView;
     private LinearLayout leftLayout;
     private LinearLayout rightLayout;
@@ -124,6 +125,11 @@ public class CustomBar extends ActionBar {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         contentView.addView(view, layoutParams);
+        progress = new Progress(context);
+        progress.setColor(getForegroundColor());
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (density * 2));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        contentView.addView(progress.get(), layoutParams);
     }
 
     public void setTitleAlignLeft(boolean titleAlignLeft) {
@@ -136,12 +142,6 @@ public class CustomBar extends ActionBar {
     public void showStatusView(boolean show, boolean showShadow) {
         statusView.setVisibility(show ? VISIBLE : GONE);
         statusView.setShowShadow(showShadow);
-    }
-
-    public void addProgressView(View progressView, boolean top) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(top ? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.ALIGN_PARENT_BOTTOM);
-        contentView.addView(progressView, layoutParams);
     }
 
     private AppCompatImageView newImageView(int width) {
@@ -214,6 +214,10 @@ public class CustomBar extends ActionBar {
         return divider;
     }
 
+    public Progress getProgress() {
+        return progress;
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -276,6 +280,7 @@ public class CustomBar extends ActionBar {
         super.updateForeground(foregroundColor);
         title.get().setTextColor(foregroundColor);
         secondTitle.get().setTextColor(foregroundColor);
+        progress.setColor(foregroundColor);
     }
 
     public void setOnTitleClickListener(Title.OnTitleClickListener listener) {

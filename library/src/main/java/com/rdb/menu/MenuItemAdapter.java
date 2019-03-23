@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.rdb.actionbar.ViewCreater;
+
 import java.util.List;
 
 class MenuItemAdapter extends BaseAdapter {
@@ -55,7 +57,7 @@ class MenuItemAdapter extends BaseAdapter {
             ((LinearLayout) convertView).setGravity(Gravity.CENTER_VERTICAL);
             LinearLayout.LayoutParams layoutParams = null;
             if (showIcon) {
-                iconView = new AppCompatImageView(parent.getContext());
+                iconView = ViewCreater.getViewCreater().newImageView(parent.getContext());
                 iconView.setId(iconId);
                 iconView.setScaleType(ImageView.ScaleType.CENTER);
                 int iconSize = (int) (MenuConfig.menuIconSize * density);
@@ -63,7 +65,7 @@ class MenuItemAdapter extends BaseAdapter {
                 layoutParams.setMargins(0, 0, (int) (MenuConfig.menuIconPadding * density), 0);
                 ((LinearLayout) convertView).addView(iconView, layoutParams);
             }
-            textView = new AppCompatTextView(parent.getContext());
+            textView = ViewCreater.getViewCreater().newTextView(parent.getContext());
             textView.setId(textId);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuConfig.textSize);

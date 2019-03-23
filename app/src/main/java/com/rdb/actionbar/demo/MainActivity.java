@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         customBar.bindActivity(this);
 //        customBar.showStatusView(true,true);//全屏时调用
         customBar.getTitle().setText("CustomBar").setVisible(true);
-        customBar.getSecondTitle().setText("标题居中 菜单").setVisible(true);
+        customBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);
         customBar.addImageAction(Type.OVERFLOW, "more", CustomBar.RIGHT).setImageResource(R.drawable.core_ic_custombar_v_more, true).setVisible(true);
         customBar.addImageAction(Type.OTHER, "share", CustomBar.RIGHT).setImageResource(R.drawable.core_ic_custombar_share, true).setVisible(true);
         customBar.setActionListener(new Action.OnActionListener() {
@@ -52,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        customBar.getProgress().setProgress(50);
         CustomBar customBar2 = findViewById(R.id.customBar2);
         customBar2.bindActivity(this);
         customBar2.setTitleAlignLeft(true);
         customBar2.getTitle().setText("CustomBar").setVisible(true);
-        customBar2.getSecondTitle().setText("标题居左").setVisible(true);
+        customBar2.getSecondTitle().setText("标题居左  Indeterminate进度条").setVisible(true);
         customBar2.addImageAction(Type.BACK, "back", CustomBar.LEFT).setImageResource(R.drawable.core_ic_custombar_arrow_back, true).setVisible(true);
         customBar2.setActionListener(new Action.OnActionListener() {
             @Override
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        customBar2.getProgress().setIndeterminate(true);
         CustomBar customBar3 = findViewById(R.id.customBar3);
         customBar3.bindActivity(this);
         customBar3.apply(0xffD81B60, Color.WHITE);
