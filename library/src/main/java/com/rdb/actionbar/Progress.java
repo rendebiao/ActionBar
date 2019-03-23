@@ -10,17 +10,10 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 
-public class Progress extends Holder {
-
-    private ProgressBar progressBar;
+public class Progress extends Holder<Progress.ProgressBar> {
 
     public Progress(Context context) {
-        this.progressBar = new ProgressBar(context);
-    }
-
-    @Override
-    protected View get() {
-        return progressBar;
+        super(new ProgressBar(context));
     }
 
     public Progress setVisible(boolean visible) {
@@ -29,29 +22,29 @@ public class Progress extends Holder {
     }
 
     public Progress setColor(int color) {
-        progressBar.setColor(color);
+        get().setColor(color);
         return this;
     }
 
     public Progress setIndeterminate(boolean indeterminate) {
-        progressBar.setIndeterminate(indeterminate);
+        get().setIndeterminate(indeterminate);
         return this;
     }
 
     public Progress setStrokeCap(Paint.Cap cap) {
-        progressBar.setStrokeCap(cap);
+        get().setStrokeCap(cap);
         return this;
     }
 
     public Progress setProgress(float progress) {
-        progressBar.setProgress(progress, true, true);
+        get().setProgress(progress, true, true);
         return this;
     }
 
     public Progress setAlignTop(boolean alignTop) {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) progressBar.getLayoutParams();
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) get().getLayoutParams();
         lp.addRule(alignTop ? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.ALIGN_PARENT_BOTTOM);
-        progressBar.setLayoutParams(lp);
+        get().setLayoutParams(lp);
         return this;
     }
 

@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingBar floatingBar = findViewById(R.id.floatingBar);
         floatingBar.bindActivity(this);
         floatingBar.setOrientation(LinearLayout.VERTICAL);
-//        floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
+        floatingBar.setParentDrawableId(R.drawable.core_ic_custombar_v_more);
         floatingBar.addImageAction().setType(Action.OVERFLOW).setTag("add").setImageResource(R.drawable.core_ic_custombar_add, true);
         floatingBar.addImageAction().setTag("search").setImageResource(R.drawable.core_ic_custombar_search, true);
         floatingBar.addImageAction().setTag("refresh").setImageResource(R.drawable.core_ic_custombar_refresh, true);

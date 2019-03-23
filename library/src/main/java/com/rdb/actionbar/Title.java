@@ -1,15 +1,14 @@
 package com.rdb.actionbar;
 
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.TextView;
 
-public class Title extends Holder implements View.OnClickListener {
+public class Title extends Holder<AppCompatTextView> implements View.OnClickListener {
 
     private static final long DOUBLE_CLICK_TIME = 200;
-    private TextView textView;
     private long lastTitleClickTime;
     private OnTitleClickListener titleClickListener;
-    private Runnable mTitleClickRunnable = new Runnable() {
+    private Runnable titleClickRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -20,14 +19,9 @@ public class Title extends Holder implements View.OnClickListener {
         }
     };
 
-    protected Title(TextView textView) {
-        this.textView = textView;
-        this.textView.setOnClickListener(this);
-    }
-
-    @Override
-    protected TextView get() {
-        return textView;
+    protected Title(AppCompatTextView textView) {
+        super(textView);
+        get().setOnClickListener(this);
     }
 
     public Title setVisible(boolean visible) {
@@ -36,12 +30,12 @@ public class Title extends Holder implements View.OnClickListener {
     }
 
     public Title setText(int resid) {
-        textView.setText(resid);
+        get().setText(resid);
         return this;
     }
 
     public Title setText(CharSequence text) {
-        textView.setText(text);
+        get().setText(text);
         return this;
     }
 
@@ -53,13 +47,13 @@ public class Title extends Holder implements View.OnClickListener {
     public void onClick(View v) {
         if (titleClickListener != null) {
             long clickTime = System.currentTimeMillis();
-            textView.removeCallbacks(mTitleClickRunnable);
+            get().removeCallbacks(titleClickRunnable);
             if (clickTime - lastTitleClickTime <= DOUBLE_CLICK_TIME) {
                 lastTitleClickTime = 0;
                 titleClickListener.onTitleDoubleClick();
             } else if (clickTime - lastTitleClickTime > DOUBLE_CLICK_TIME) {
                 lastTitleClickTime = clickTime;
-                textView.postDelayed(mTitleClickRunnable, DOUBLE_CLICK_TIME);
+                get().postDelayed(titleClickRunnable, DOUBLE_CLICK_TIME);
             }
         }
     }

@@ -191,7 +191,7 @@ public class FloatingBar extends ActionBar {
             }
             addView(action.get(), getChildCount() < 3 ? getChildCount() : getChildCount() - 1, lp);
             if (!parent) {
-                action.setOnVisibleChnageListener(visibleChnageListener);
+                action.setOnVisibleChangeListener(visibleChnageListener);
             }
             if (Build.VERSION.SDK_INT >= 21) {
                 action.get().setElevation(density * 5);

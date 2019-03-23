@@ -5,32 +5,25 @@ import android.support.annotation.IntDef;
 import android.view.View;
 import android.widget.FrameLayout;
 
-public abstract class Action extends Holder implements View.OnClickListener {
+public abstract class Action extends Holder<FrameLayout> implements View.OnClickListener {
 
     public static final int BACK = 1;
     public static final int FINISH = 2;
     public static final int OVERFLOW = 3;
-    protected int id;
+    private int id;
     private String tag;
-    private @Type
-    int type;
-    private FrameLayout container;
+    private int type;
     private OnActionListener actionListener;
 
     protected Action(Context context, int id, OnActionListener actionListener) {
+        super(new FrameLayout(context));
         this.id = id;
-        container = new FrameLayout(context);
-        container.setOnClickListener(this);
+        get().setOnClickListener(this);
         this.actionListener = actionListener;
     }
 
     protected void addCustomViewInner(View view, FrameLayout.LayoutParams layoutParams) {
-        container.addView(view, layoutParams);
-    }
-
-    @Override
-    protected FrameLayout get() {
-        return container;
+        get().addView(view, layoutParams);
     }
 
     public int getId() {
@@ -38,16 +31,16 @@ public abstract class Action extends Holder implements View.OnClickListener {
     }
 
     public int getCenterX() {
-        return (container.getLeft() + container.getRight()) / 2;
+        return (get().getLeft() + get().getRight()) / 2;
     }
 
     public int getCenterY() {
-        return (container.getTop() + container.getBottom()) / 2;
+        return (get().getTop() + get().getBottom()) / 2;
     }
 
     public void setMarginInner(int left, int right) {
-        if (container.getChildCount() > 0) {
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) container.getChildAt(0).getLayoutParams();
+        if (get().getChildCount() > 0) {
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) get().getChildAt(0).getLayoutParams();
             layoutParams.leftMargin = left;
             layoutParams.rightMargin = right;
         }
