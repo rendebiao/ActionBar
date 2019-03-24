@@ -12,22 +12,22 @@ public class MenuStyle {
 
     public static int backgroundColor = Color.WHITE;
     public static int foregroundColor = Color.BLACK;
-    public static int backgroundElevation = 5;
-    public static int backgroundCornerRadius = 2;
-    public static int menuItemHeight = 42;
-    public static int menuItemTextSize = 13;
-    public static int menuItemPaddingHorizontal = 12;
-    public static int menuItemIconSize = 32;
-    public static int menuItemIconPadding = 8;
-    public static int popupWidth = 140;
+    public static float backgroundElevation = 5;
+    public static float backgroundCornerRadius = 2;
+    public static float menuItemHeight = 42;
+    public static float menuItemTextSize = 15;
+    public static float menuItemPaddingHorizontal = 12;
+    public static float menuItemIconSize = 32;
+    public static float menuItemIconPadding = 8;
+    public static float popupWidth = 140;
     public static Class<? extends AppCompatTextView> textViewClass = AppCompatTextView.class;
     public static Class<? extends AppCompatImageView> imageViewClass = AppCompatImageView.class;
 
-    public static AppCompatTextView newTextView(Context context) {
+    protected static AppCompatTextView newTextView(Context context) {
         return newView(context, textViewClass, AppCompatTextView.class);
     }
 
-    public static AppCompatImageView newImageView(Context context) {
+    protected static AppCompatImageView newImageView(Context context) {
         return newView(context, imageViewClass, AppCompatImageView.class);
     }
 

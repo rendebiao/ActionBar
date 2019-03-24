@@ -9,25 +9,25 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ActionStyle {
 
-    public static int toolBarHeight = 42;
-    public static int toolBarTitleSize = 17;
-    public static int toolBarSecondTitleSize = 13;
-    public static int toolBarActionTextSize = 13;
-    public static int toolBarDividerHeight = 1;
-    public static int toolBarProgressHeight = 2;
+    public static float toolBarHeight = 42;
+    public static float toolBarTitleSize = 17;
+    public static float toolBarSecondTitleSize = 13;
+    public static float toolBarActionTextSize = 13;
+    public static float toolBarDividerHeight = 0.5f;
+    public static float toolBarProgressHeight = 2;
 
-    public static int floatingBarParentSize = 54;
-    public static int floatingBarChildSize = 54;
-    public static int floatingBarMargin = 20;
-    public static int floatingBarActionTextSize = 13;
+    public static float floatingBarParentSize = 54;
+    public static float floatingBarChildSize = 54;
+    public static float floatingBarMargin = 20;
+    public static float floatingBarActionTextSize = 13;
     public static Class<? extends AppCompatTextView> textViewClass = AppCompatTextView.class;
     public static Class<? extends AppCompatImageView> imageViewClass = AppCompatImageView.class;
 
-    public static AppCompatTextView newTextView(Context context) {
+    protected static AppCompatTextView newTextView(Context context) {
         return newView(context, textViewClass, AppCompatTextView.class);
     }
 
-    public static AppCompatImageView newImageView(Context context) {
+    protected static AppCompatImageView newImageView(Context context) {
         return newView(context, imageViewClass, AppCompatImageView.class);
     }
 

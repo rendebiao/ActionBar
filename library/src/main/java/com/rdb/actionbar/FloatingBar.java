@@ -100,9 +100,9 @@ public class FloatingBar extends ActionBar {
     public FloatingBar(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         super.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
-        strokeWidth = (int) (density * 1);
-        parentWidth = parentHeight = (int) (Math.max(ActionStyle.floatingBarParentSize, 36) * density);
-        childWidth = childHeight = (int) (Math.max(ActionStyle.floatingBarChildSize, 36) * density);
+        strokeWidth = 1;
+        parentWidth = parentHeight = Math.round(Math.max(ActionStyle.floatingBarParentSize, 36) * density);
+        childWidth = childHeight = Math.round(Math.max(ActionStyle.floatingBarChildSize, 36) * density);
         horizontal = getOrientation() == HORIZONTAL;
         initAnimator();
         super.setActionListener(actionClickListenerProxy);
@@ -186,7 +186,7 @@ public class FloatingBar extends ActionBar {
         if (action != null) {
             action.get().setBackgroundDrawable(new BackgroundDrawable(getBackgroundColor()));
             LayoutParams lp = new LayoutParams(parent ? parentWidth : childWidth, parent ? parentHeight : childHeight);
-            int defaultMargin = (int) (density * ActionStyle.floatingBarMargin);
+            int defaultMargin = Math.round(density * ActionStyle.floatingBarMargin);
             if (horizontal) {
                 lp.setMargins(0, 0, defaultMargin, defaultMargin);
             } else {
@@ -271,7 +271,7 @@ public class FloatingBar extends ActionBar {
         }
     }
 
-    public void setBackgroundStrok(int strokeWidth, int strokeColor) {
+    public void setBackgroundStroke(int strokeWidth, int strokeColor) {
         this.strokeWidth = strokeWidth;
         this.strokeColor = strokeColor;
         for (int i = 0; i < actions.size(); i++) {
