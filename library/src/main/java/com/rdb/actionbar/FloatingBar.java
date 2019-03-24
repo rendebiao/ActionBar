@@ -101,8 +101,8 @@ public class FloatingBar extends ActionBar {
         super(context, attrs, defStyleAttr);
         super.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
         strokeWidth = 1;
-        parentWidth = parentHeight = Math.round(Math.max(ActionStyle.floatingBarParentSize, 36) * density);
-        childWidth = childHeight = Math.round(Math.max(ActionStyle.floatingBarChildSize, 36) * density);
+        parentWidth = parentHeight = Math.round(Math.max(ActionStyle.floatingBarParentSize_DP, 36) * density);
+        childWidth = childHeight = Math.round(Math.max(ActionStyle.floatingBarChildSize_DP, 36) * density);
         horizontal = getOrientation() == HORIZONTAL;
         initAnimator();
         super.setActionListener(actionClickListenerProxy);
@@ -154,7 +154,7 @@ public class FloatingBar extends ActionBar {
         textView.setGravity(Gravity.CENTER);
         textView.setEms(4);
         textView.setSingleLine();
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.floatingBarActionTextSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.floatingBarActionTextSize_DP);
         textView.setDuplicateParentStateEnabled(true);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return textView;
@@ -186,7 +186,7 @@ public class FloatingBar extends ActionBar {
         if (action != null) {
             action.get().setBackgroundDrawable(new BackgroundDrawable(getBackgroundColor()));
             LayoutParams lp = new LayoutParams(parent ? parentWidth : childWidth, parent ? parentHeight : childHeight);
-            int defaultMargin = Math.round(density * ActionStyle.floatingBarMargin);
+            int defaultMargin = Math.round(density * ActionStyle.floatingBarMargin_DP);
             if (horizontal) {
                 lp.setMargins(0, 0, defaultMargin, defaultMargin);
             } else {

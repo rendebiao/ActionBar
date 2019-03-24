@@ -50,7 +50,7 @@ public class ToolBar extends ActionBar {
 
     private void initViews(Context context) {
         setOrientation(VERTICAL);
-        curHeight = Math.round((ActionStyle.toolBarHeight > 0 ? ActionStyle.toolBarHeight : 42) * density);
+        curHeight = Math.round((ActionStyle.toolBarHeight_DP > 0 ? ActionStyle.toolBarHeight_DP : 42) * density);
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(android.R.attr.actionBarItemBackground, typedValue, true);
         actionBarItemBackground = typedValue.resourceId;
@@ -98,13 +98,13 @@ public class ToolBar extends ActionBar {
         AppCompatTextView titleView = new AppCompatTextView(context);
         titleView.setGravity(Gravity.CENTER);
         titleView.setSingleLine();
-        titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarTitleSize);
+        titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarTitleSize_DP);
         titleLayout.addView(titleView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         titleView.setVisibility(View.GONE);
         AppCompatTextView titleSecondView = new AppCompatTextView(context);
         titleSecondView.setGravity(Gravity.CENTER);
         titleSecondView.setSingleLine();
-        titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarSecondTitleSize);
+        titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarSecondTitleSize_DP);
         LayoutParams layoutParams1 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams1.setMargins(0, Math.round(-3 * density), 0, 0);
         titleLayout.addView(titleSecondView, layoutParams1);
@@ -119,12 +119,12 @@ public class ToolBar extends ActionBar {
     private void initOtherLayout(Context context) {
         View view = new View(context);
         divider = new Divider(view);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarDividerHeight));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarDividerHeight_PX));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         contentView.addView(view, layoutParams);
         progress = new Progress(context);
         progress.setColor(getForegroundColor());
-        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarProgressHeight));
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarProgressHeight_DP));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         contentView.addView(progress.get(), layoutParams);
     }
@@ -157,7 +157,7 @@ public class ToolBar extends ActionBar {
         textView.setSingleLine();
         textView.setMinWidth(width);
         textView.setPadding(4, 0, 4, 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarActionTextSize * density);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarActionTextSize_DP * density);
         textView.setDuplicateParentStateEnabled(true);
         textView.setBackgroundResource(actionBarItemBackground);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));

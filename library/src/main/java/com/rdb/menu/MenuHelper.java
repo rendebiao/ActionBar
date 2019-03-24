@@ -48,16 +48,16 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
         listView.setDivider(null);
         window.setContentView(listView);
         menuItemAdapter = new MenuItemAdapter(menu.getMenuItems(), showIcon, foregroundColor, density);
-        window.setWidth((int) (density * MenuStyle.popupWidth));
+        window.setWidth((int) (density * MenuStyle.popupWidth_DP));
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setOutsideTouchable(true);
         if (Build.VERSION.SDK_INT >= 21) {
-            window.setElevation(density * MenuStyle.backgroundElevation);
+            window.setElevation(density * MenuStyle.backgroundElevation_DP);
         }
         window.setFocusable(true);
         backgroundDrawable = new GradientDrawable();
         backgroundDrawable.setColor(backgroundColor);
-        backgroundDrawable.setCornerRadius(MenuStyle.backgroundCornerRadius * density);
+        backgroundDrawable.setCornerRadius(MenuStyle.backgroundCornerRadius_DP * density);
         window.setBackgroundDrawable(backgroundDrawable);
         listView.setAdapter(menuItemAdapter);
         listView.setOnItemClickListener(this);

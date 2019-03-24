@@ -59,7 +59,7 @@ class MenuItemAdapter extends BaseAdapter {
         AppCompatTextView textView;
         if (convertView == null) {
             convertView = new LinearLayout(parent.getContext());
-            int padding = (int) (MenuStyle.menuItemPaddingHorizontal * density);
+            int padding = (int) (MenuStyle.menuItemPaddingHorizontal_DP * density);
             convertView.setPadding(padding, 0, padding, 0);
             ((LinearLayout) convertView).setGravity(Gravity.CENTER_VERTICAL);
             LinearLayout.LayoutParams layoutParams = null;
@@ -67,16 +67,16 @@ class MenuItemAdapter extends BaseAdapter {
                 iconView = MenuStyle.newImageView(parent.getContext());
                 iconView.setId(iconId);
                 iconView.setScaleType(ImageView.ScaleType.CENTER);
-                int iconSize = (int) (MenuStyle.menuItemIconSize * density);
+                int iconSize = (int) (MenuStyle.menuItemIconSize_DP * density);
                 layoutParams = new LinearLayout.LayoutParams(iconSize, iconSize);
-                layoutParams.setMargins(0, 0, (int) (MenuStyle.menuItemIconPadding * density), 0);
+                layoutParams.setMargins(0, 0, (int) (MenuStyle.menuItemIconPadding_DP * density), 0);
                 ((LinearLayout) convertView).addView(iconView, layoutParams);
             }
             textView = MenuStyle.newTextView(parent.getContext());
             textView.setId(textId);
             textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuStyle.menuItemTextSize);
-            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuStyle.menuItemHeight * density));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuStyle.menuItemTextSize_DP);
+            layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuStyle.menuItemHeight_DP * density));
             ((LinearLayout) convertView).addView(textView, layoutParams);
         } else {
             iconView = convertView.findViewById(iconId);
