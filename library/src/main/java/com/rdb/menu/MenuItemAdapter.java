@@ -76,7 +76,6 @@ class MenuItemAdapter extends BaseAdapter {
             textView.setId(textId);
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, MenuStyle.menuItemTextSize);
-            textView.setTextColor(foregroundColor);
             layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MenuStyle.menuItemHeight * density));
             ((LinearLayout) convertView).addView(textView, layoutParams);
         } else {
@@ -91,6 +90,7 @@ class MenuItemAdapter extends BaseAdapter {
                 drawable.setColorFilter(foregroundColor, PorterDuff.Mode.SRC_IN);
             }
         }
+        textView.setTextColor(foregroundColor);
         textView.setText(menuItem.getTitle());
         return convertView;
     }

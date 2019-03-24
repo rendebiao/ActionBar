@@ -108,14 +108,14 @@ public abstract class ActionBar extends LinearLayout {
         }
     }
 
-    protected TextAction createTextAction(AppCompatTextView textView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected TextAction createTextAction(AppCompatTextView textView, Action.OnActionListener actionClickListener) {
         idIndex++;
         TextAction action = new TextAction(getContext(), idIndex, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);
         return action;
     }
 
-    protected ImageAction createImageAction(AppCompatImageView imageView, int foregroundColor, Action.OnActionListener actionClickListener) {
+    protected ImageAction createImageAction(AppCompatImageView imageView, Action.OnActionListener actionClickListener) {
         idIndex++;
         ImageAction action = new ImageAction(getContext(), idIndex, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
         addAction(action);

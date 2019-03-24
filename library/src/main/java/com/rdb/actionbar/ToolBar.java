@@ -169,13 +169,13 @@ public class ToolBar extends ActionBar {
     }
 
     public ImageAction addImageAction(@Align int align, int width) {
-        ImageAction action = createImageAction(newImageView(width), getForegroundColor(), null);
+        ImageAction action = createImageAction(newImageView(width), null);
         addActionView(action, align);
         return action;
     }
 
     public TextAction addTextAction(@Align int align) {
-        TextAction action = createTextAction(newTextView(curHeight), getForegroundColor(), null);
+        TextAction action = createTextAction(newTextView(curHeight), null);
         addActionView(action, align);
         return action;
     }

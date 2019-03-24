@@ -24,6 +24,8 @@ import android.widget.ImageView;
 public class FloatingBar extends ActionBar {
 
     private boolean expand;
+    private int strokeColor;
+    private int strokeWidth;
     private int childWidth;
     private int childHeight;
     private int parentWidth;
@@ -98,6 +100,7 @@ public class FloatingBar extends ActionBar {
     public FloatingBar(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         super.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
+        strokeWidth = (int) (density * 1);
         parentWidth = parentHeight = (int) (Math.max(ActionStyle.floatingBarParentSize, 36) * density);
         childWidth = childHeight = (int) (Math.max(ActionStyle.floatingBarChildSize, 36) * density);
         horizontal = getOrientation() == HORIZONTAL;
@@ -162,13 +165,13 @@ public class FloatingBar extends ActionBar {
     }
 
     private ImageAction addImageAction(boolean parent) {
-        ImageAction action = createImageAction(newImageView(), Color.WHITE, parent ? parentClickListener : null);
+        ImageAction action = createImageAction(newImageView(), parent ? parentClickListener : null);
         addActionView(action, parent);
         return action;
     }
 
     public TextAction addTextAction() {
-        TextAction action = createTextAction(newTextView(), Color.WHITE, null);
+        TextAction action = createTextAction(newTextView(), null);
         addActionView(action, false);
         return action;
     }
@@ -181,7 +184,7 @@ public class FloatingBar extends ActionBar {
 
     private void addActionView(Action action, boolean parent) {
         if (action != null) {
-            action.get().setBackgroundDrawable(new BackgroundDrawable(colorPrimary));
+            action.get().setBackgroundDrawable(new BackgroundDrawable(getBackgroundColor()));
             LayoutParams lp = new LayoutParams(parent ? parentWidth : childWidth, parent ? parentHeight : childHeight);
             int defaultMargin = (int) (density * ActionStyle.floatingBarMargin);
             if (horizontal) {
@@ -268,19 +271,13 @@ public class FloatingBar extends ActionBar {
         }
     }
 
-    public void setBackgroundStrokeWidth(int strokeWidth) {
+    public void setBackgroundStrok(int strokeWidth, int strokeColor) {
+        this.strokeWidth = strokeWidth;
+        this.strokeColor = strokeColor;
         for (int i = 0; i < actions.size(); i++) {
             Action action = actions.get(actions.keyAt(i));
             BackgroundDrawable background = (BackgroundDrawable) action.get().getBackground();
-            background.setStrokeWidth(strokeWidth);
-        }
-    }
-
-    public void setBackgroundStrokeColor(int strokeColor) {
-        for (int i = 0; i < actions.size(); i++) {
-            Action action = actions.get(actions.keyAt(i));
-            BackgroundDrawable background = (BackgroundDrawable) action.get().getBackground();
-            background.setStrokeColor(strokeColor);
+            background.setStroke(strokeWidth, strokeColor);
         }
     }
 
@@ -291,13 +288,10 @@ public class FloatingBar extends ActionBar {
 
     class BackgroundDrawable extends StateListDrawable {
 
-        private int strokeColor;
-        private int strokeWidth;
         private GradientDrawable normalDrawable;
         private GradientDrawable pressedDrawable;
 
         public BackgroundDrawable(int color) {
-            strokeWidth = (int) (density * 1);
             pressedDrawable = new GradientDrawable();
             normalDrawable = new GradientDrawable();
             pressedDrawable.setShape(GradientDrawable.OVAL);
@@ -305,6 +299,7 @@ public class FloatingBar extends ActionBar {
             addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
             addState(new int[]{}, normalDrawable);
             setColor(color);
+            setStroke(strokeWidth, strokeColor);
         }
 
         public void setColor(int color) {
@@ -313,15 +308,7 @@ public class FloatingBar extends ActionBar {
             invalidateSelf();
         }
 
-        public void setStrokeColor(int strokeColor) {
-            this.strokeColor = strokeColor;
-            pressedDrawable.setStroke(strokeWidth, strokeColor);
-            normalDrawable.setStroke(strokeWidth, strokeColor);
-            invalidateSelf();
-        }
-
-        public void setStrokeWidth(int strokeWidth) {
-            this.strokeWidth = strokeWidth;
+        public void setStroke(int strokeWidth, int strokeColor) {
             pressedDrawable.setStroke(strokeWidth, strokeColor);
             normalDrawable.setStroke(strokeWidth, strokeColor);
             invalidateSelf();
