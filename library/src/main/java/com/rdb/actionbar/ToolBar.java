@@ -95,13 +95,13 @@ public class ToolBar extends ActionBar {
         titleLayout = new LinearLayout(context);
         titleLayout.setOrientation(VERTICAL);
         titleLayout.setGravity(Gravity.CENTER_VERTICAL);
-        AppCompatTextView titleView = new AppCompatTextView(context);
+        AppCompatTextView titleView = ActionStyle.newTextView(context);
         titleView.setGravity(Gravity.CENTER);
         titleView.setSingleLine();
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarTitleSize_DP);
         titleLayout.addView(titleView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         titleView.setVisibility(View.GONE);
-        AppCompatTextView titleSecondView = new AppCompatTextView(context);
+        AppCompatTextView titleSecondView = ActionStyle.newTextView(context);
         titleSecondView.setGravity(Gravity.CENTER);
         titleSecondView.setSingleLine();
         titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarSecondTitleSize_DP);
