@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         toolBar3.getProgress().setIndeterminate(true);
         toolBar3.getTitle().setText("CustomBar").setVisible(true);
         toolBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
-        toolBar3.addImageAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_close, true);
+        toolBar3.addTextAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setText("返回");
         toolBar3.addImageAction(ToolBar.LEFT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true);
         toolBar3.setActionListener(new Action.OnActionListener() {
             @Override
