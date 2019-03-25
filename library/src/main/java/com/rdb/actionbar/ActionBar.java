@@ -103,7 +103,7 @@ public abstract class ActionBar extends LinearLayout {
             if (action instanceof TextAction) {
                 ((TextAction) action).setTextColor(foregroundColor);
             } else if (action instanceof ImageAction) {
-                ((ImageAction) action).setTintColor(foregroundColor);
+                ((ImageAction) action).setImageColor(foregroundColor);
             }
         }
     }

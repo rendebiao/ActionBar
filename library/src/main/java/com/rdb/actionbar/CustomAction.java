@@ -10,6 +10,7 @@ public class CustomAction extends Action {
         super(context, id, actionClickListener);
     }
 
+    @Override
     public CustomAction setVisible(boolean visible) {
         super.setVisibleInner(visible);
         return this;

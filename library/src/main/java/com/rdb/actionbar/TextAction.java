@@ -3,6 +3,7 @@ package com.rdb.actionbar;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -10,17 +11,19 @@ import android.widget.FrameLayout;
 
 public class TextAction extends Action {
 
-    private int tintColor;
+    private boolean tint;
+    private int textColor;
     private AppCompatTextView textView;
 
-    protected TextAction(Context context, int id, AppCompatTextView textView, OnActionListener actionClickListener, int color) {
+    protected TextAction(Context context, int id, AppCompatTextView textView, OnActionListener actionClickListener, int textColor) {
         super(context, id, actionClickListener);
-        this.tintColor = color;
         this.textView = textView;
-        textView.setTextColor(color);
+        this.textColor = textColor;
+        textView.setTextColor(textColor);
         get().addView(textView);
     }
 
+    @Override
     public TextAction setVisible(boolean visible) {
         super.setVisibleInner(visible);
         return this;
@@ -56,25 +59,27 @@ public class TextAction extends Action {
         return this;
     }
 
-    public TextAction setImageResource(int drawableId) {
-        Drawable drawable = AppCompatResources.getDrawable(textView.getContext(), drawableId).getConstantState().newDrawable().mutate();
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        textView.setCompoundDrawables(drawable, null, null, null);
-        tintDrawable(tintColor);
-        return this;
-    }
-
-    public TextAction setImageDrawable(Drawable drawable) {
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        textView.setCompoundDrawables(drawable, null, null, null);
-        return this;
-    }
-
-    protected void setTintColor(int tintColor) {
-        if (this.tintColor != tintColor) {
-            this.tintColor = tintColor;
-            tintDrawable(tintColor);
+    public TextAction setImageResource(@DrawableRes int drawableId, boolean tint) {
+        Drawable drawable = null;
+        try {
+            drawable = AppCompatResources.getDrawable(textView.getContext(), drawableId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            setImageDrawable(drawable, tint);
         }
+        return this;
+    }
+
+    public TextAction setImageDrawable(Drawable drawable, boolean tint) {
+        this.tint = tint;
+        if (tint) {
+            drawable = drawable.getConstantState().newDrawable().mutate();
+            tintDrawable(textColor);
+        }
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        textView.setCompoundDrawables(drawable, null, null, null);
+        return this;
     }
 
     private void tintDrawable(int tintColor) {
@@ -88,8 +93,10 @@ public class TextAction extends Action {
         textView.setMinWidth(minWidth);
     }
 
-    protected void setTextColor(int color) {
-        textView.setTextColor(color);
-        setTintColor(color);
+    protected void setTextColor(int textColor) {
+        textView.setTextColor(textColor);
+        if (tint) {
+            tintDrawable(textColor);
+        }
     }
 }

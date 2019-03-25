@@ -11,16 +11,18 @@ import android.widget.FrameLayout;
 
 public class ImageAction extends Action {
 
-    private int tintColor;
+    private boolean tint;
+    private int imageColor;
     private AppCompatImageView imageView;
 
-    protected ImageAction(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int tintColor) {
+    protected ImageAction(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int imageColor) {
         super(context, id, actionClickListener);
-        this.tintColor = tintColor;
         this.imageView = imageView;
+        this.imageColor = imageColor;
         get().addView(imageView);
     }
 
+    @Override
     public ImageAction setVisible(boolean visible) {
         super.setVisibleInner(visible);
         return this;
@@ -47,21 +49,30 @@ public class ImageAction extends Action {
     }
 
     public ImageAction setImageResource(@DrawableRes int drawableId, boolean tint) {
-        if (tint) {
+        if (!tint) {
+            this.tint = false;
+            imageView.setImageResource(drawableId);
+        } else {
+            Drawable drawable = null;
             try {
-                imageView.setImageDrawable(AppCompatResources.getDrawable(imageView.getContext(), drawableId).getConstantState().newDrawable().mutate());
-                tintDrawable(tintColor);
+                drawable = AppCompatResources.getDrawable(imageView.getContext(), drawableId);
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                setImageDrawable(drawable, tint);
             }
-        } else {
-            imageView.setImageResource(drawableId);
         }
         return this;
     }
 
-    public ImageAction setImageDrawable(Drawable drawable) {
-        imageView.setImageDrawable(drawable);
+    public ImageAction setImageDrawable(Drawable drawable, boolean tint) {
+        this.tint = tint;
+        if (!tint || drawable == null) {
+            imageView.setImageDrawable(drawable);
+        } else {
+            imageView.setImageDrawable(drawable.getConstantState().newDrawable().mutate());
+            tintDrawable(imageColor);
+        }
         return this;
     }
 
@@ -71,10 +82,12 @@ public class ImageAction extends Action {
         imageView.setLayoutParams(lp);
     }
 
-    protected void setTintColor(int tintColor) {
-        if (this.tintColor != tintColor) {
-            this.tintColor = tintColor;
-            tintDrawable(tintColor);
+    protected void setImageColor(int imageColor) {
+        if (this.imageColor != imageColor) {
+            this.imageColor = imageColor;
+            if (tint) {
+                tintDrawable(imageColor);
+            }
         }
     }
 
