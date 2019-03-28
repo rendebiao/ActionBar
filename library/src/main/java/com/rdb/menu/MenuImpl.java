@@ -17,6 +17,7 @@ class MenuImpl implements Menu {
     private int count;
     private Context context;
     private List<MenuItemImpl> menuItems = new ArrayList<>();
+    private List<MenuItemImpl> showMenuItems = new ArrayList<>();
 
     public MenuImpl(Context context) {
         this.context = context;
@@ -38,8 +39,17 @@ class MenuImpl implements Menu {
         return createMenuItemImpl(count++, context.getString(titleRes));
     }
 
+    public void refresh() {
+        showMenuItems.clear();
+        for (MenuItemImpl menuItem : menuItems) {
+            if (menuItem.isVisible()) {
+                showMenuItems.add(menuItem);
+            }
+        }
+    }
+
     public List<MenuItemImpl> getMenuItems() {
-        return menuItems;
+        return showMenuItems;
     }
 
     @Override
@@ -79,7 +89,12 @@ class MenuImpl implements Menu {
 
     @Override
     public void removeItem(int id) {
-
+        for (MenuItemImpl menuItem : menuItems) {
+            if (menuItem.getItemId() == id) {
+                menuItems.remove(menuItem);
+                break;
+            }
+        }
     }
 
     @Override
@@ -89,7 +104,7 @@ class MenuImpl implements Menu {
 
     @Override
     public void clear() {
-
+        menuItems.clear();
     }
 
     @Override
@@ -109,22 +124,27 @@ class MenuImpl implements Menu {
 
     @Override
     public boolean hasVisibleItems() {
-        return false;
+        return showMenuItems.size() > 0;
     }
 
     @Override
     public MenuItem findItem(int id) {
+        for (MenuItemImpl menuItem : menuItems) {
+            if (menuItem.getItemId() == id) {
+                return menuItem;
+            }
+        }
         return null;
     }
 
     @Override
     public int size() {
-        return 0;
+        return menuItems.size();
     }
 
     @Override
     public MenuItem getItem(int index) {
-        return null;
+        return menuItems.get(index);
     }
 
     @Override

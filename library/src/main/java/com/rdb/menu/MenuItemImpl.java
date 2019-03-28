@@ -14,8 +14,9 @@ class MenuItemImpl implements MenuItem {
 
     private int id;
     private Drawable icon;
-    private CharSequence title;
     private Context context;
+    private boolean visible;
+    private CharSequence title;
 
     MenuItemImpl(Context context, int id, CharSequence title) {
         this.context = context;
@@ -142,12 +143,13 @@ class MenuItemImpl implements MenuItem {
 
     @Override
     public MenuItem setVisible(boolean visible) {
+        this.visible = visible;
         return this;
     }
 
     @Override
     public boolean isVisible() {
-        return false;
+        return true;
     }
 
     @Override
@@ -157,7 +159,7 @@ class MenuItemImpl implements MenuItem {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
