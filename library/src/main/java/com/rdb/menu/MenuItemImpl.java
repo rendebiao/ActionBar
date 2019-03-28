@@ -149,7 +149,7 @@ class MenuItemImpl implements MenuItem {
 
     @Override
     public boolean isVisible() {
-        return true;
+        return visible;
     }
 
     @Override
