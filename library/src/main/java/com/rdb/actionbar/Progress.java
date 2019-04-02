@@ -128,7 +128,7 @@ public class Progress extends Holder<Progress.ProgressBar> {
         public void setProgress(float progress, boolean animateWhenUp, boolean animateWhenDown) {
             if (!indeterminate) {
                 progress = updateProgress(progress);
-                boolean animate = progress - curProgress > 0 ? animateWhenUp : animateWhenDown;
+                boolean animate = isShown() && attached && (progress - curProgress > 0 ? animateWhenUp : animateWhenDown);
                 if (animate) {
                     this.toProgress = progress;
                     this.fromProgress = curProgress;
@@ -209,7 +209,7 @@ public class Progress extends Holder<Progress.ProgressBar> {
         protected void onAttachedToWindow() {
             super.onAttachedToWindow();
             attached = true;
-            if (getVisibility() == View.VISIBLE && indeterminate) {
+            if (isShown() && indeterminate) {
                 if (!valueAnimator.isRunning()) {
                     valueAnimator.start();
                 }
@@ -219,14 +219,12 @@ public class Progress extends Holder<Progress.ProgressBar> {
         @Override
         protected void onVisibilityChanged(View changedView, int visibility) {
             super.onVisibilityChanged(changedView, visibility);
-            if (attached && visibility == View.VISIBLE) {
-                if (indeterminate) {
+            if (indeterminate) {
+                if (attached && isShown()) {
                     if (!valueAnimator.isRunning()) {
                         valueAnimator.start();
                     }
-                }
-            } else {
-                if (indeterminate) {
+                } else {
                     if (valueAnimator.isRunning()) {
                         valueAnimator.cancel();
                     }
