@@ -48,7 +48,7 @@ public class Progress extends Holder<Progress.ProgressBar> {
         return this;
     }
 
-    public static class ProgressBar extends View implements ValueAnimator.AnimatorUpdateListener {
+    static class ProgressBar extends View implements ValueAnimator.AnimatorUpdateListener {
 
         private int color;
         private Paint paint;
