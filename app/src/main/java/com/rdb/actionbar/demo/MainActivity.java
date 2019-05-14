@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //        customBar.showStatusView(true,true);//全屏时调用
         toolBar.getTitle().setText("CustomBar").setVisible(true);//主标题 默认不显示
         toolBar.getSecondTitle().setText("标题居中 菜单 进度条").setVisible(true);//副标题 默认不显示
-        toolBar.getDivider().setColor(Color.WHITE);//底部divider 默认显示 颜色透明
+        toolBar.getDivider().setColor(Color.WHITE).setVisible(true);//底部divider 默认显示 颜色透明
         toolBar.addImageAction(ToolBar.RIGHT).setType(Action.OVERFLOW).setTag("more").setImageResource(R.drawable.core_ic_custombar_v_more, true);
         toolBar.addImageAction(ToolBar.RIGHT).setTag("share").setImageResource(R.drawable.core_ic_custombar_share, true);
         toolBar.setActionListener(new Action.OnActionListener() {
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        toolBar.getProgress().setProgress(50);
+        toolBar.getProgress().setProgress(50).setVisible(true);
         ToolBar toolBar2 = findViewById(R.id.customBar2);
         toolBar2.bindActivity(this);
         toolBar2.setTitleAlignLeft(true);
         toolBar2.getTitle().setText("CustomBar").setVisible(true);
-        toolBar2.getSecondTitle().setText("标题居左  Indeterminate进度条");
+        toolBar2.getSecondTitle().setText("标题居左  Indeterminate进度条").setVisible(true);
         toolBar2.addImageAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setImageResource(R.drawable.core_ic_custombar_arrow_back, true);
         toolBar2.setActionListener(new Action.OnActionListener() {
             @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         toolBar3.bindActivity(this);
         toolBar3.apply(0xffD81B60, Color.WHITE);
         toolBar3.updateContentHeight((int) (getResources().getDisplayMetrics().density * 48));
-        toolBar3.getProgress().setIndeterminate(true);
+        toolBar3.getProgress().setIndeterminate(true).setVisible(true);
         toolBar3.getTitle().setText("CustomBar").setVisible(true);
         toolBar3.getSecondTitle().setText("自定义高度和颜色").setVisible(true);
         toolBar3.addTextAction(ToolBar.LEFT).setType(Action.BACK).setTag("back").setText("返回");

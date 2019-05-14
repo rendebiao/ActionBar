@@ -119,11 +119,13 @@ public class ToolBar extends ActionBar {
     private void initOtherLayout(Context context) {
         View view = new View(context);
         divider = new Divider(view);
+        divider.setVisible(false);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ActionStyle.toolBarDividerHeight_PX);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         contentView.addView(view, layoutParams);
         progress = new Progress(context);
         progress.setColor(getForegroundColor());
+        progress.setVisible(false);
         layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarProgressHeight_DP));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         contentView.addView(progress.get(), layoutParams);
