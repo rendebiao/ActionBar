@@ -13,7 +13,7 @@ public class MenuStyle {
     public static int backgroundColor = Color.WHITE;
     public static int foregroundColor = Color.BLACK;
     public static float backgroundElevation_DP = 5;
-    public static float backgroundCornerRadius_DP = 2;
+    public static float backgroundCornerRadius_DP = 3;
     public static float menuItemHeight_DP = 42;
     public static float menuItemTextSize_DP = 15;
     public static float menuItemPaddingHorizontal_DP = 12;

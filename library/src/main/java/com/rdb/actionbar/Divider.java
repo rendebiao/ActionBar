@@ -9,13 +9,13 @@ public class Divider extends Holder<View> {
         super(view);
     }
 
-    public Divider setColor(@ColorInt int color) {
-        get().setBackgroundColor(color);
+    public Divider setVisible(boolean visible) {
+        super.setVisibleInner(visible);
         return this;
     }
 
-    public Divider setVisible(boolean visible) {
-        super.setVisibleInner(visible);
+    public Divider setColor(@ColorInt int color) {
+        get().setBackgroundColor(color);
         return this;
     }
 }

@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import com.rdb.menu.MenuHelper;
 import com.rdb.menu.MenuListener;
 
-import java.util.HashMap;
-
 public abstract class ActionBar extends LinearLayout {
 
     protected float density;
@@ -31,7 +29,6 @@ public abstract class ActionBar extends LinearLayout {
     private int backgroundColor;
     private MenuListener menuListener;
     private Action.OnActionListener actionClickListener;
-    private HashMap<String, Action> actionTags = new HashMap<>();
     private SparseArray<MenuHelper> menuHelpers = new SparseArray<>();
 
     private Action.OnActionListener actionListenerProxy = new Action.OnActionListener() {
@@ -103,7 +100,7 @@ public abstract class ActionBar extends LinearLayout {
             if (action instanceof TextAction) {
                 ((TextAction) action).setTextColor(foregroundColor);
             } else if (action instanceof ImageAction) {
-                ((ImageAction) action).setTintColor(foregroundColor);
+                ((ImageAction) action).setImageColor(foregroundColor);
             }
         }
     }
@@ -111,31 +108,22 @@ public abstract class ActionBar extends LinearLayout {
     protected TextAction createTextAction(AppCompatTextView textView, Action.OnActionListener actionClickListener) {
         idIndex++;
         TextAction action = new TextAction(getContext(), idIndex, textView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
-        addAction(action);
+        actions.put(idIndex, action);
         return action;
     }
 
     protected ImageAction createImageAction(AppCompatImageView imageView, Action.OnActionListener actionClickListener) {
         idIndex++;
         ImageAction action = new ImageAction(getContext(), idIndex, imageView, actionClickListener == null ? actionListenerProxy : actionClickListener, foregroundColor);
-        addAction(action);
+        actions.put(idIndex, action);
         return action;
     }
 
     protected CustomAction createCustomAction(Action.OnActionListener actionClickListener) {
         idIndex++;
         CustomAction action = new CustomAction(getContext(), idIndex, actionClickListener == null ? actionListenerProxy : actionClickListener);
-        addAction(action);
+        actions.put(idIndex, action);
         return action;
-    }
-
-    private void addAction(Action action) {
-        if (action != null) {
-            actions.put(idIndex, action);
-            if (!TextUtils.isEmpty(action.getTag())) {
-                actionTags.put(action.getTag(), action);
-            }
-        }
     }
 
     public Action getAction(int id) {
@@ -143,7 +131,15 @@ public abstract class ActionBar extends LinearLayout {
     }
 
     public Action getAction(String tag) {
-        return actionTags.get(tag);
+        if (!TextUtils.isEmpty(tag)) {
+            for (int i = 0; i < actions.size(); i++) {
+                Action action = actions.get(actions.keyAt(i));
+                if (TextUtils.equals(action.getTag(), tag)) {
+                    return action;
+                }
+            }
+        }
+        return null;
     }
 
     public int getForegroundColor() {

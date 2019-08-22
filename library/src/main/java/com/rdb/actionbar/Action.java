@@ -22,6 +22,11 @@ public abstract class Action extends Holder<FrameLayout> implements View.OnClick
         this.actionListener = actionListener;
     }
 
+    public Action setVisible(boolean visible) {
+        super.setVisibleInner(visible);
+        return this;
+    }
+
     protected void addCustomViewInner(View view, FrameLayout.LayoutParams layoutParams) {
         get().addView(view, layoutParams);
     }
@@ -45,6 +50,7 @@ public abstract class Action extends Holder<FrameLayout> implements View.OnClick
             layoutParams.rightMargin = right;
         }
     }
+
     protected void setTypeInner(@Type int type) {
         this.type = type;
     }

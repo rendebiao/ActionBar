@@ -94,34 +94,37 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
             if (menuListener != null) {
                 menuListener.onPrepareMenu(menu);
             }
-            int newOffsetX = offsetX;
-            int newOffsetY = offsetY;
-            if (gravity == LEFT_TOP) {
-                newOffsetY = newOffsetY - anchor.getHeight();
-            } else if (gravity == LEFT_CENTER) {
-                newOffsetY = newOffsetY - anchor.getHeight() / 2;
-            } else if (gravity == CENTER_TOP) {
-                newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
-                newOffsetY = newOffsetY - anchor.getHeight();
-            } else if (gravity == CENTER) {
-                newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
-                newOffsetY = newOffsetY - anchor.getHeight() / 2;
-            } else if (gravity == CENTER_BOTTOM) {
-                newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
-            } else if (gravity == RIGHT_TOP) {
-                newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
-                newOffsetY = newOffsetY - anchor.getHeight();
-            } else if (gravity == RIGHT_CENTER) {
-                newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
-                newOffsetY = newOffsetY - anchor.getHeight() / 2;
-            } else if (gravity == RIGHT_BOTTOM) {
-                newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
-            }
-            apply(MenuStyle.backgroundColor, MenuStyle.foregroundColor);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                window.showAsDropDown(anchor, newOffsetX, newOffsetY, LEFT_BOTTOM);
-            } else {
-                window.showAsDropDown(anchor, newOffsetX, newOffsetY);
+            menu.refresh();
+            if (menu.hasVisibleItems()) {
+                int newOffsetX = offsetX;
+                int newOffsetY = offsetY;
+                if (gravity == LEFT_TOP) {
+                    newOffsetY = newOffsetY - anchor.getHeight();
+                } else if (gravity == LEFT_CENTER) {
+                    newOffsetY = newOffsetY - anchor.getHeight() / 2;
+                } else if (gravity == CENTER_TOP) {
+                    newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
+                    newOffsetY = newOffsetY - anchor.getHeight();
+                } else if (gravity == CENTER) {
+                    newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
+                    newOffsetY = newOffsetY - anchor.getHeight() / 2;
+                } else if (gravity == CENTER_BOTTOM) {
+                    newOffsetX = newOffsetX + anchor.getWidth() / 2 - window.getWidth() / 2;
+                } else if (gravity == RIGHT_TOP) {
+                    newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
+                    newOffsetY = newOffsetY - anchor.getHeight();
+                } else if (gravity == RIGHT_CENTER) {
+                    newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
+                    newOffsetY = newOffsetY - anchor.getHeight() / 2;
+                } else if (gravity == RIGHT_BOTTOM) {
+                    newOffsetX = newOffsetX + anchor.getWidth() - window.getWidth();
+                }
+                apply(MenuStyle.backgroundColor, MenuStyle.foregroundColor);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    window.showAsDropDown(anchor, newOffsetX, newOffsetY, LEFT_BOTTOM);
+                } else {
+                    window.showAsDropDown(anchor, newOffsetX, newOffsetY);
+                }
             }
         }
         return window.isShowing();

@@ -62,6 +62,7 @@ public class ToolBar extends ActionBar {
         initCenterLayout(context);
         initTitleLayout(context);
         initRightLayout(context);
+        initOtherLayout(context);
         apply(colorPrimary, Color.WHITE);
     }
 
@@ -94,13 +95,13 @@ public class ToolBar extends ActionBar {
         titleLayout = new LinearLayout(context);
         titleLayout.setOrientation(VERTICAL);
         titleLayout.setGravity(Gravity.CENTER_VERTICAL);
-        AppCompatTextView titleView = new AppCompatTextView(context);
+        AppCompatTextView titleView = ActionStyle.newTextView(context);
         titleView.setGravity(Gravity.CENTER);
         titleView.setSingleLine();
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarTitleSize_DP);
         titleLayout.addView(titleView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         titleView.setVisibility(View.GONE);
-        AppCompatTextView titleSecondView = new AppCompatTextView(context);
+        AppCompatTextView titleSecondView = ActionStyle.newTextView(context);
         titleSecondView.setGravity(Gravity.CENTER);
         titleSecondView.setSingleLine();
         titleSecondView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarSecondTitleSize_DP);
@@ -113,6 +114,19 @@ public class ToolBar extends ActionBar {
         contentView.addView(titleLayout, layoutParams2);
         title = new Title(titleView);
         secondTitle = new Title(titleSecondView);
+    }
+
+    private void initOtherLayout(Context context) {
+        View view = new View(context);
+        divider = new Divider(view);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarDividerHeight_PX));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        contentView.addView(view, layoutParams);
+        progress = new Progress(context);
+        progress.setColor(getForegroundColor());
+        layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarProgressHeight_DP));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        contentView.addView(progress.get(), layoutParams);
     }
 
     public void setTitleAlignLeft(boolean titleAlignLeft) {
@@ -194,24 +208,10 @@ public class ToolBar extends ActionBar {
     }
 
     public Divider getDivider() {
-        if (divider == null) {
-            View view = new View(getContext());
-            divider = new Divider(view);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarDividerHeight_PX));
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            contentView.addView(view, layoutParams);
-        }
         return divider;
     }
 
     public Progress getProgress() {
-        if (progress == null) {
-            progress = new Progress(getContext());
-            progress.setColor(getForegroundColor());
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(density * ActionStyle.toolBarProgressHeight_DP));
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            contentView.addView(progress.get(), layoutParams);
-        }
         return progress;
     }
 
