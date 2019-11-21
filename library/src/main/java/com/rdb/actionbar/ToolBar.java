@@ -157,7 +157,7 @@ public class ToolBar extends ActionBar {
         textView.setSingleLine();
         textView.setMinWidth(width);
         textView.setPadding(4, 0, 4, 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarActionTextSize_DP * density);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, ActionStyle.toolBarActionTextSize_DP);
         textView.setDuplicateParentStateEnabled(true);
         textView.setBackgroundResource(actionBarItemBackground);
         textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
