@@ -1,19 +1,20 @@
 package com.rdb.actionbar;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.annotation.IntDef;
 
 public abstract class Action extends Holder<FrameLayout> implements View.OnClickListener {
 
     public static final int BACK = 1;
     public static final int FINISH = 2;
     public static final int OVERFLOW = 3;
-    private int id;
+    private final int id;
+    private final OnActionListener actionListener;
     private String tag;
     private int type;
-    private OnActionListener actionListener;
 
     protected Action(Context context, int id, OnActionListener actionListener) {
         super(new FrameLayout(context));

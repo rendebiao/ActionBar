@@ -50,9 +50,12 @@ public class Progress extends Holder<Progress.ProgressBar> {
 
     static class ProgressBar extends View implements ValueAnimator.AnimatorUpdateListener {
 
+        private final Paint paint;
+        private final float density;
+        private final RectF rectF = new RectF();
+        private final float[] pointRadius = new float[]{0, 0, 0, 0};
+        private final ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
         private int color;
-        private Paint paint;
-        private float density;
         private float toWidth0;
         private float center0;
         private float curWidth0;
@@ -68,9 +71,6 @@ public class Progress extends Holder<Progress.ProgressBar> {
         private boolean attached;
         private boolean indeterminate;
         private float lastAnimatedValue = 1;
-        private RectF rectF = new RectF();
-        private float[] pointRadius = new float[]{0, 0, 0, 0};
-        private ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
 
         public ProgressBar(Context context) {
             super(context);

@@ -2,10 +2,6 @@ package com.rdb.actionbar;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -13,11 +9,17 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.rdb.menu.MenuHelper;
 import com.rdb.menu.MenuListener;
 
 public abstract class ActionBar extends LinearLayout {
 
+    private final SparseArray<MenuHelper> menuHelpers = new SparseArray<>();
     protected float density;
     protected int colorPrimary;
     protected boolean isFocused;
@@ -29,9 +31,7 @@ public abstract class ActionBar extends LinearLayout {
     private int backgroundColor;
     private MenuListener menuListener;
     private Action.OnActionListener actionClickListener;
-    private SparseArray<MenuHelper> menuHelpers = new SparseArray<>();
-
-    private Action.OnActionListener actionListenerProxy = new Action.OnActionListener() {
+    private final Action.OnActionListener actionListenerProxy = new Action.OnActionListener() {
         @Override
         public void onActionClick(Action action) {
             int actionType = action.getType();

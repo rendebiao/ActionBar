@@ -2,8 +2,9 @@ package com.rdb.menu;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

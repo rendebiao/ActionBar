@@ -1,7 +1,8 @@
 package com.rdb.actionbar;
 
-import android.support.annotation.ColorInt;
 import android.view.View;
+
+import androidx.annotation.ColorInt;
 
 public class Divider extends Holder<View> {
 

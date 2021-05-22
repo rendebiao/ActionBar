@@ -2,9 +2,6 @@ package com.rdb.actionbar;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.IntDef;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -13,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.IntDef;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class ToolBar extends ActionBar {
 

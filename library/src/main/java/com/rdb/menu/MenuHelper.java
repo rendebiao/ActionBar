@@ -4,13 +4,14 @@ package com.rdb.menu;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.support.annotation.IntDef;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+
+import androidx.annotation.IntDef;
 
 
 public class MenuHelper implements AdapterView.OnItemClickListener {
@@ -24,18 +25,18 @@ public class MenuHelper implements AdapterView.OnItemClickListener {
     public static final int RIGHT_TOP = android.view.Gravity.RIGHT | android.view.Gravity.TOP;
     public static final int RIGHT_BOTTOM = android.view.Gravity.RIGHT | android.view.Gravity.BOTTOM;
     public static final int RIGHT_CENTER = android.view.Gravity.RIGHT | android.view.Gravity.CENTER_VERTICAL;
+    private final View anchor;
+    private final float density;
+    private final MenuImpl menu;
+    private final PopupWindow window;
+    private final MenuListener menuListener;
+    private final MenuItemAdapter menuItemAdapter;
+    private final GradientDrawable backgroundDrawable;
     private int offsetX;
     private int offsetY;
     private int gravity = LEFT_BOTTOM;
-    private View anchor;
-    private float density;
-    private MenuImpl menu;
-    private PopupWindow window;
     private int foregroundColor;
     private int backgroundColor;
-    private MenuListener menuListener;
-    private MenuItemAdapter menuItemAdapter;
-    private GradientDrawable backgroundDrawable;
 
     private MenuHelper(Context context, View anchor, int style, boolean showIcon, MenuListener menuListener) {
         density = context.getResources().getDisplayMetrics().density;

@@ -2,9 +2,6 @@ package com.rdb.menu;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -13,16 +10,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.view.ViewCompat;
+
 import java.util.List;
 
 class MenuItemAdapter extends BaseAdapter {
 
-    private int iconId;
-    private int textId;
-    private float density;
-    private boolean showIcon;
+    private final int iconId;
+    private final int textId;
+    private final float density;
+    private final boolean showIcon;
+    private final List<MenuItemImpl> menuItems;
     private int foregroundColor;
-    private List<MenuItemImpl> menuItems;
 
     public MenuItemAdapter(List<MenuItemImpl> menuItems, boolean showIcon, int foregroundColor, float density) {
         this.density = density;

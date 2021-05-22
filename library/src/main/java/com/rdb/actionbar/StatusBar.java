@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 
 public class StatusBar extends View {
 
+    private final RectF rectF;
+    private final Paint shadowPaint;
+    private final LinearGradient linearGradient;
     private int height;
-    private RectF rectF;
-    private Paint shadowPaint;
     private boolean showShadow;
-    private LinearGradient linearGradient;
 
     public StatusBar(Context context) {
         super(context);

@@ -6,12 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.AttrRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,23 +15,23 @@ import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+
 public class FloatingBar extends ActionBar {
 
+    private final int childWidth;
+    private final int childHeight;
+    private final int parentWidth;
+    private final int parentHeight;
+    private final ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
+    private final ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
     private boolean expand;
-    private int strokeColor;
-    private int strokeWidth;
-    private int childWidth;
-    private int childHeight;
-    private int parentWidth;
-    private int parentHeight;
-    private boolean horizontal;
-    private int parentDrawableId;
-    private ImageAction parentAction;
-    private Action.OnActionListener actionClickListener;
-    private ValueAnimator expandAnimator = ValueAnimator.ofFloat(1, 0);
-    private ValueAnimator unexpandAnimator = ValueAnimator.ofFloat(0, 1);
-
-    private Action.OnActionListener parentClickListener = new Action.OnActionListener() {
+    private final Action.OnActionListener parentClickListener = new Action.OnActionListener() {
         @Override
         public void onActionClick(Action action) {
             if (expand) {
@@ -48,8 +42,12 @@ public class FloatingBar extends ActionBar {
             expand = !expand;
         }
     };
-
-    private ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+    private int strokeColor;
+    private int strokeWidth;
+    private boolean horizontal;
+    private int parentDrawableId;
+    private ImageAction parentAction;
+    private final ValueAnimator.AnimatorUpdateListener animatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             float value = (float) animation.getAnimatedValue();
@@ -63,20 +61,7 @@ public class FloatingBar extends ActionBar {
             }
         }
     };
-
-    private Action.OnActionListener actionClickListenerProxy = new Action.OnActionListener() {
-        @Override
-        public void onActionClick(Action action) {
-            if (actionClickListener != null) {
-                actionClickListener.onActionClick(action);
-            }
-            if (expand) {
-                parentAction.get().callOnClick();
-            }
-        }
-    };
-
-    private Holder.OnVisibleChangeListener visibleChnageListener = new Holder.OnVisibleChangeListener() {
+    private final Holder.OnVisibleChangeListener visibleChnageListener = new Holder.OnVisibleChangeListener() {
 
         int visibleCount = 0;
 
@@ -85,6 +70,18 @@ public class FloatingBar extends ActionBar {
             visibleCount += (visible ? 1 : -1);
             if (parentAction != null) {
                 parentAction.setVisible(visibleCount > 0);
+            }
+        }
+    };
+    private Action.OnActionListener actionClickListener;
+    private final Action.OnActionListener actionClickListenerProxy = new Action.OnActionListener() {
+        @Override
+        public void onActionClick(Action action) {
+            if (actionClickListener != null) {
+                actionClickListener.onActionClick(action);
+            }
+            if (expand) {
+                parentAction.get().callOnClick();
             }
         }
     };
@@ -288,8 +285,8 @@ public class FloatingBar extends ActionBar {
 
     class BackgroundDrawable extends StateListDrawable {
 
-        private GradientDrawable normalDrawable;
-        private GradientDrawable pressedDrawable;
+        private final GradientDrawable normalDrawable;
+        private final GradientDrawable pressedDrawable;
 
         public BackgroundDrawable(int color) {
             pressedDrawable = new GradientDrawable();

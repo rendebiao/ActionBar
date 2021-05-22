@@ -14,10 +14,10 @@ import java.util.List;
 class MenuImpl implements Menu {
 
 
+    private final Context context;
+    private final List<MenuItemImpl> menuItems = new ArrayList<>();
+    private final List<MenuItemImpl> showMenuItems = new ArrayList<>();
     private int count;
-    private Context context;
-    private List<MenuItemImpl> menuItems = new ArrayList<>();
-    private List<MenuItemImpl> showMenuItems = new ArrayList<>();
 
     public MenuImpl(Context context) {
         this.context = context;

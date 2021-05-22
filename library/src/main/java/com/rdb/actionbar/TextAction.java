@@ -3,17 +3,18 @@ package com.rdb.actionbar;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatTextView;
+
 public class TextAction extends Action {
 
+    private final int textColor;
+    private final AppCompatTextView textView;
     private boolean tint;
-    private int textColor;
-    private AppCompatTextView textView;
 
     protected TextAction(Context context, int id, AppCompatTextView textView, OnActionListener actionClickListener, int textColor) {
         super(context, id, actionClickListener);

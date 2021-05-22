@@ -1,14 +1,15 @@
 package com.rdb.actionbar;
 
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class Title extends Holder<AppCompatTextView> implements View.OnClickListener {
 
     private static final long DOUBLE_CLICK_TIME = 200;
     private long lastTitleClickTime;
     private OnTitleClickListener titleClickListener;
-    private Runnable titleClickRunnable = new Runnable() {
+    private final Runnable titleClickRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -60,6 +61,7 @@ public class Title extends Holder<AppCompatTextView> implements View.OnClickList
 
     public interface OnTitleClickListener {
         void onTitleClick();
+
         void onTitleDoubleClick();
     }
 }

@@ -3,18 +3,19 @@ package com.rdb.menu;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.ActionProvider;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
+import androidx.appcompat.content.res.AppCompatResources;
+
 class MenuItemImpl implements MenuItem {
 
-    private int id;
+    private final int id;
+    private final Context context;
     private Drawable icon;
-    private Context context;
     private boolean visible;
     private CharSequence title;
 

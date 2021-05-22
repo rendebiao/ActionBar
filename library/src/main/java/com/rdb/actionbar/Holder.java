@@ -4,7 +4,7 @@ import android.view.View;
 
 abstract class Holder<T extends View> {
 
-    private T view;
+    private final T view;
     private OnVisibleChangeListener visibleChangeListener;
 
     public Holder(T view) {

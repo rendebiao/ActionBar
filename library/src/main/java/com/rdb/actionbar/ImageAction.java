@@ -3,17 +3,18 @@ package com.rdb.actionbar;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
+
 public class ImageAction extends Action {
 
+    private final AppCompatImageView imageView;
     private boolean tint;
     private int imageColor;
-    private AppCompatImageView imageView;
 
     protected ImageAction(Context context, int id, AppCompatImageView imageView, OnActionListener actionClickListener, int imageColor) {
         super(context, id, actionClickListener);
